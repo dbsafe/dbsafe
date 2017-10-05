@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbSafe", "DbSafe\DbSafe.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbSafeTests", "DbSafeTests\DbSafeTests.csproj", "{91CEF54D-CAB6-49B1-9EBB-1EE642212544}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlDbSafe", "SqlDbSafe\SqlDbSafe.csproj", "{54716428-8B0D-49A8-B3CA-2FE2F1456DAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{91CEF54D-CAB6-49B1-9EBB-1EE642212544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91CEF54D-CAB6-49B1-9EBB-1EE642212544}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91CEF54D-CAB6-49B1-9EBB-1EE642212544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54716428-8B0D-49A8-B3CA-2FE2F1456DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54716428-8B0D-49A8-B3CA-2FE2F1456DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54716428-8B0D-49A8-B3CA-2FE2F1456DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54716428-8B0D-49A8-B3CA-2FE2F1456DAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5CD2E091-3A37-4B8E-881D-17B76564BDD9} = {BB8FFA83-44FA-47C2-A229-6C7189033225}
 		{91CEF54D-CAB6-49B1-9EBB-1EE642212544} = {B8BF1C42-AD58-41B4-858B-19E3F25F1C9A}
+		{54716428-8B0D-49A8-B3CA-2FE2F1456DAE} = {BB8FFA83-44FA-47C2-A229-6C7189033225}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D1EE0CC-E6E7-4F5D-9A12-E5D38919B7C0}
