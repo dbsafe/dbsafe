@@ -1,0 +1,9 @@
+version: 1.0.0-beta-{build}
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+build:
+  project: dbsafe.sln
+  verbosity: minimal
+before_build:
+  nuget restore
