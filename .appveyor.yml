@@ -13,5 +13,7 @@ before_build:
   nuget help
 
   nuget restore
-after_test:
-  dotnet test
+test:
+  assemblies:
+    only:
+    - '*Tests.dll'
