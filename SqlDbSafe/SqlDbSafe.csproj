@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Authors>Ernesto Valcarcel</Authors>
+    <Description>SqlDbSafe supports the creation of automated integration test for code that access a Microsoft SQL Server database.</Description>
+    <Copyright>Copyright (c) 2017 dbsafe</Copyright>
+    <PackageLicenseUrl>https://github.com/dbsafe/dbsafe/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/dbsafe/dbsafe</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dbsafe/dbsafe</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

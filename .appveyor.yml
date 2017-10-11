@@ -4,6 +4,8 @@ configuration: Release
 platform: Any CPU
 build:
   project: dbsafe.sln
+  publish_nuget: true
+  publish_nuget_symbols: true
   verbosity: minimal
 before_build:
   nuget restore

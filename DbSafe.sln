@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.travis.yml = .travis.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbSafeTests", "DbSafeTests\DbSafeTests.csproj", "{6480B009-F187-4D05-AF39-9229600ECF7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{54716428-8B0D-49A8-B3CA-2FE2F1456DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54716428-8B0D-49A8-B3CA-2FE2F1456DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54716428-8B0D-49A8-B3CA-2FE2F1456DAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6480B009-F187-4D05-AF39-9229600ECF7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6480B009-F187-4D05-AF39-9229600ECF7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6480B009-F187-4D05-AF39-9229600ECF7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6480B009-F187-4D05-AF39-9229600ECF7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5CD2E091-3A37-4B8E-881D-17B76564BDD9} = {BB8FFA83-44FA-47C2-A229-6C7189033225}
 		{54716428-8B0D-49A8-B3CA-2FE2F1456DAE} = {BB8FFA83-44FA-47C2-A229-6C7189033225}
+		{6480B009-F187-4D05-AF39-9229600ECF7A} = {B8BF1C42-AD58-41B4-858B-19E3F25F1C9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D1EE0CC-E6E7-4F5D-9A12-E5D38919B7C0}
