@@ -31,7 +31,7 @@ namespace DbSafeTests.FileDefinition
             var xml = @"<dataset name=""ds1"" />";
 
             var actual = ExecuteLoad(xml);
-            Assert.AreEqual("ds11", actual.Name);
+            Assert.AreEqual("ds1", actual.Name);
         }
 
         [TestMethod]
