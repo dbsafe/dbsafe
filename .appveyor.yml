@@ -9,6 +9,7 @@ build:
   verbosity: minimal
 before_build:
   nuget help
+
   nuget restore
 after_test:
   dotnet test
