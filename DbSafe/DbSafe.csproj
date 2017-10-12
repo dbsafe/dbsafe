@@ -12,6 +12,11 @@
     <Copyright>Copyright (c) 2017 dbsafe</Copyright>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="FileDefinition\" />
   </ItemGroup>
