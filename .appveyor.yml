@@ -4,17 +4,24 @@ configuration: Release
 platform: Any CPU
 install:
   - cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/v4.3.0/nuget.exe
+
+before_build:
+  nuget restore
 build:
   project: dbsafe.sln
   publish_nuget: false
   publish_nuget_symbols: true
   verbosity: minimal
-before_build:
-  nuget restore
-after_test:
-  dotnet test "DbSafeTests\DbSafeTests.csproj"
-artifacts:
-  - path: bin\$(configuration)\*.dll
-    name: dlls
-  - path: '**\*.nupkg'
-    name: nuget
+  
+test:
+  assemblies:
+    only:
+    - '**\*.tests.dll'
+# after_test:
+#  dotnet test "DbSafeTests\DbSafeTests.csproj"
+
+# artifacts:
+# - path: bin\$(configuration)\*.dll
+#   name: dlls
+# - path: '**\*.nupkg'
+#   name: nuget
