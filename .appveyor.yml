@@ -12,11 +12,14 @@ build:
   publish_nuget: false
   publish_nuget_symbols: true
   verbosity: minimal
-  
-test:
-  assemblies:
-    only:
-    - '**\*tests.dll'
+
+test_script:
+- cmd: dotnet test "DbSafeTests\DbSafeTests.csproj"
+
+# test:
+# assemblies:
+#    only:
+#   - '**\*tests.dll'
 # after_test:
 #  dotnet test "DbSafeTests\DbSafeTests.csproj"
 
