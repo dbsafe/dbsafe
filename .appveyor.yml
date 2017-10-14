@@ -1,15 +1,23 @@
-version: 1.0.0-beta-{build}
+version: 1.0.0-beta{build}
 image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
 install:
-  - cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/v4.3.0/nuget.exe
+- cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/v4.3.0/nuget.exe
+before_build:
+- cmd: nuget restore
 build:
   project: dbsafe.sln
-  publish_nuget: false
+  publish_nuget: true
   publish_nuget_symbols: true
   verbosity: minimal
-before_build:
-  nuget restore
-after_test:
-  dotnet test "DbSafeTests\DbSafeTests.csproj"
+test_script:
+- cmd: dotnet test "DbSafeTests\DbSafeTests.csproj"
+artifacts:
+- path: bin\$(configuration)\*.dll
+- path: '**\*.nupkg'
