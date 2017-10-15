@@ -1,7 +1,7 @@
 param([string]$assemblyVersion)
 $ErrorActionPreference = "Stop"
 
-Write-Host Setting AssemblyVersion and FileVersion to: $assemblyVersion
+Write-Host Setting AssemblyVersion to: $assemblyVersion
 
 # ls
 
@@ -9,7 +9,6 @@ Get-ChildItem -Path $PSScriptRoot -Filter *.csproj -Recurse -File -Name | ForEac
     $projectName = [System.IO.Path]::GetFullPath($_)    
     Write-Host Searching Project: $projectName
     $updated = 0
-
 
     $xml = [xml](Get-Content $projectName)
     $nodes = $xml.Project.ChildNodes
@@ -21,12 +20,6 @@ Get-ChildItem -Path $PSScriptRoot -Filter *.csproj -Recurse -File -Name | ForEac
                 $node.AssemblyVersion = $assemblyVersion
                 $updated = 1;
             }
-
-            # $current = "[" + $node.FileVersion + "]"
-            # if ($current -ne "[]") {
-            #     $node.FileVersion = $assemblyVersion
-            #     $updated = 1;
-            # }
         }
     }
 
