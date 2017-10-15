@@ -4,7 +4,7 @@ configuration: Release
 platform: Any CPU
 environment:
   api_key:
-    secure: 90PU1UGvvz2GHKeFUEY0Yi3Jb77uA+RKgdPxk8L5i7pxN8BA44c6B5KkUTTtYts+A+lNlA+vj3yZEvMXpaJz4L/O+90QzkGgGeYVNgBGhCg=
+    secure: TFDaKD4TQc7hWomFzKAW6CDYnYqboEgFZ6a8d5+1T3J+RL647PsgqrlIXLHWjH19
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
