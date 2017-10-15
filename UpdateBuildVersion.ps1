@@ -14,7 +14,6 @@ Get-ChildItem -Path $PSScriptRoot -Filter *.csproj -Recurse -File -Name | ForEac
     $xml = [xml](Get-Content $projectName)
     $nodes = $xml.Project.ChildNodes
     foreach ($node in $nodes) {
-        #Write-Host $node.ToString()
         if ($node.Name -eq "PropertyGroup") {
             
             $current = "[" + $node.AssemblyVersion + "]"
@@ -23,11 +22,11 @@ Get-ChildItem -Path $PSScriptRoot -Filter *.csproj -Recurse -File -Name | ForEac
                 $updated = 1;
             }
 
-            $current = "[" + $node.FileVersion + "]"
-            if ($current -ne "[]") {
-                $node.FileVersion = $assemblyVersion
-                $updated = 1;
-            }
+            # $current = "[" + $node.FileVersion + "]"
+            # if ($current -ne "[]") {
+            #     $node.FileVersion = $assemblyVersion
+            #     $updated = 1;
+            # }
         }
     }
 
