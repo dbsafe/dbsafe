@@ -2,6 +2,9 @@ version: 1.0.0.{build}
 image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
+environment:
+  api_key:
+    secure: 90PU1UGvvz2GHKeFUEY0Yi3Jb77uA+RKgdPxk8L5i7pxN8BA44c6B5KkUTTtYts+A+lNlA+vj3yZEvMXpaJz4L/O+90QzkGgGeYVNgBGhCg=
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
@@ -9,6 +12,8 @@ dotnet_csproj:
   package_version: 1.0.0-beta{build}
 install:
 - cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/v4.3.0/nuget.exe
+nuget:
+  account_feed: true
 before_build:
 - cmd: >-
     nuget restore -Verbosity quiet
@@ -22,3 +27,6 @@ test_script:
 artifacts:
 - path: '**\bin\Release\*.nupkg'
   name: NuGet
+deploy_script:
+  - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe  
+  - ps: ($artifacts.values | Where-Object {($_.path -like '*.nupkg') -and  !($_.path -like '*.symbols.nupkg')}) | foreach-object {nuget.exe push $_.path -Source https://www.nuget.org/api/v2/package -ApiKey $env:api_key; if ($lastexitcode -ne 0) {throw}}
