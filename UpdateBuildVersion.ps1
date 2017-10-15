@@ -1,6 +1,5 @@
+param([string]$assemblyVersion)
 $ErrorActionPreference = "Stop"
-
-$assemblyVersion = "1.2.3.6"
 
 Write-Host Setting AssemblyVersion and FileVersion to: $assemblyVersion
 
