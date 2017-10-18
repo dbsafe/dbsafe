@@ -52,6 +52,49 @@ E.g. cleaning tables, selecting actual data.
 
 The `<dataset>` elements contain data that can be used to populate a table or as the expected data. 
 
+Initialization
+--------------
+The static method `Initialize` returns the DbSafe instance that is used during the test. One or more input files can be passed as parameters. 
+The method `SetConnectionString` passes the name of the connection string used by DbSafe. The connection string must be defined in the `app.config` file.
+The method `ExecuteScripts` can be used to clean the tables before the test data is loaded by the method `LoadTables`.
+
+```csharp
+ [TestClass]
+    public class ProductDbTest
+    {
+        private IDbSafeManager _dbSafe;
+        
+        // ...
+        
+        [TestInitialize]
+        public void Initialize()
+        {
+            _dbSafe = SqlDbSafeManager.Initialize("product-db-test.xml");
+            _dbSafe.SetConnectionString("ProductEntities-dbsafe");
+            _dbSafe.ExecuteScripts("delete-products", "delete-categories", "delete-suppliers", "reseed-product-table");
+            _dbSafe.LoadTables("categories", "suppliers", "products");
+                
+            // ...
+        }
+```
+
+The initialization methods can be called as chainable methods.
+
+```csharp
+        [TestInitialize]
+        public void Initialize()
+        {
+            _dbSafe = SqlDbSafeManager.Initialize("product-db-test.xml")
+                .SetConnectionString("ProductEntities-dbsafe")
+                .ExecuteScripts("delete-products", "delete-categories", "delete-suppliers", "reseed-product-table")
+                .LoadTables("categories", "suppliers", "products");
+                
+            // ...
+        }
+```
+
+
 Example
 -------
 The repository [dbsafe-demo](https://github.com/dbsafe/dbsafe-demo) demonstrates how to use dbsafe to test a DAL component that connects to a SQL Server database.
+
