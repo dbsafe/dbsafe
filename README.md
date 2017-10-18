@@ -54,8 +54,8 @@ The `<dataset>` elements contain data that can be used to populate a table or as
 
 Initialization
 --------------
-The static method `Initialize` returns the DbSafe instance that is used during the test. One or more input files can be passed as parameters. 
-The method `SetConnectionString` passes the name of the connection string used by DbSafe. The connection string must be defined in the `app.config` file.
+The static method `Initialize` returns the DbSafeManager instance that is used during the test. One or more input files can be passed as parameters. 
+The method `SetConnectionString` passes the name of the connection string used by DbSafeManager.
 The method `ExecuteScripts` can be used to clean the tables before the test data is loaded by the method `LoadTables`.
 
 ```csharp
@@ -92,6 +92,11 @@ The initialization methods can be called as chainable methods.
             // ...
         }
 ```
+
+Connection String
+-----------------
+Must be defined in the `app.config` file.
+The connection string used by `SqlDbSafeManager` is an ordinal ADO.NET connection string and cannot include any specific Entity Framework (or other object-relational mapper) metadata.
 
 
 Example
