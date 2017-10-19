@@ -93,6 +93,20 @@ The initialization methods can be called as chainable methods.
         }
 ```
 
+Test Completion
+---------------
+Test executions are serialized by default, the method `Initialize` gets a lock and other tests will have to wait for the test that has the lock to complete. At the end of each test the method `Completed` must be called to release the lock.
+
+The serialization of the tests is necessary to avoid tests competing for the same data when running at the same time. If the tests are designed to use different data they can run in parallel by setting `Config.SerializeTests` to `false`.
+
+```csharp
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _dbSafe?.Completed();
+        }
+```
+
 Connection String
 -----------------
 Must be defined in the `app.config` file.
