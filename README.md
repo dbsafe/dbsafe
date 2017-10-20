@@ -166,7 +166,7 @@ During the initialization the table Suppliers was populated with the dataset ```
     </dataset>
 ```
 
-After ```UpdateSupplier(supplier2)``` is executed the method ```AssertDatasetVsScript``` asserts that the data in the dataset ```suppliers-updated``` matches the data returned by the script ```select-all-suppliers```.
+After ```UpdateSupplier(supplier2)``` is executed the method ```AssertDatasetVsScript``` asserts that the data in the dataset ```suppliers-updated``` matches the data returned by the script ```select-all-suppliers```. The column ```Id``` is used as the key value.
 
 ```xml
 ...
