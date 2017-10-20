@@ -117,16 +117,16 @@ Test
 dbsafe supports writing unit tests using the AAA (Arrange, Act, Assert) pattern.
 
 **Arrange**
-Initializes objects and sets the value of the data that is passed to the method under test.
+initializes objects and sets the value of the data that is passed to the method under test.
 
 Method ```ExecuteScripts``` can be used to execute scripts to delete old records.
 Method ```LoadTables``` can be used to populate tables.
 
 **Act**
-Invokes the method under test with the arranged parameters.
+invokes the method under test with the arranged parameters.
 
 **Assert**
-Verifies that the action of the method under test behaves as expected.
+verifies that the action of the method under test behaves as expected.
 
 Method ```AssertDatasetVsScript``` can be used to compare expected data vs. actual data in the database.
 
