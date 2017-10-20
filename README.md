@@ -112,8 +112,26 @@ Connection String
 Must be defined in the `app.config` file.
 The connection string used by `SqlDbSafeManager` is an ordinal ADO.NET connection string and cannot include any specific Entity Framework (or other object-relational mapper) metadata.
 
+Test
+----
+dbsafe supports writing unit tests using the AAA (Arrange, Act, Assert) pattern.
 
-Example
--------
+**Arrange**
+Initializes objects and sets the value of the data that is passed to the method under test.
+
+Method ```ExecuteScripts``` can be used to execute scripts to delete old records.
+Method ```LoadTables``` can be used to populate tables.
+
+**Act**
+Invokes the method under test with the arranged parameters.
+
+**Assert**
+Verifies that the action of the method under test behaves as expected.
+
+Method ```AssertDatasetVsScript``` can be used to compare expected data vs. actual data in the database.
+
+
+Example Project
+---------------
 The repository [dbsafe-demo](https://github.com/dbsafe/dbsafe-demo) demonstrates how to use dbsafe to test a DAL component that connects to a SQL Server database.
 
