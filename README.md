@@ -130,6 +130,58 @@ Verifies that the action of the method under test behaves as expected.
 
 Method ```AssertDatasetVsScript``` can be used to compare expected data vs. actual data in the database.
 
+Simple Test
+-----------
+This test verifies that the method ```UpdateSupplier``` updates a record in the database. ```UpdateSupplier``` updates a supplier by its Id. The object ```supplier2``` represents the supplier with Id 2.
+
+
+```csharp
+        [TestMethod]
+        public void UpdateSupplier_Given_supplier_Must_update_record_and_return_true()
+        {
+            var supplier2 = new Supplier
+            {
+                Id = 2,
+                Name = "supplier-2-updated",
+                ContactName = "contact-name-2-updated",
+                ContactPhone = "100-200-9999",
+                ContactEmail = "email-2-updated@test.com"
+            };
+
+            var actual = _target.UpdateSupplier(supplier2);
+
+            Assert.IsTrue(actual);
+            _dbSafe.AssertDatasetVsScript("suppliers-updated", "select-all-suppliers", "Id");
+        }
+```
+
+During the initialization the table Suppliers was populated with the dataset ```suppliers```.
+```xml
+    <dataset name="suppliers" setIdentityInsert="true" table="Supplier">
+      <data>
+        <row Id="1" Name="supplier-1" ContactName="contact-name-1" ContactPhone="100-200-0001" ContactEmail="email-1@test.com" />
+        <row Id="2" Name="supplier-2" ContactName="contact-name-2" ContactPhone="100-200-0002" ContactEmail="email-2@test.com" />
+        <row Id="3" Name="supplier-3" ContactName="contact-name-3" ContactPhone="100-200-0003" ContactEmail="email-3@test.com" />
+      </data>
+    </dataset>
+```
+
+After ```UpdateSupplier(supplier2)``` is executed the method ```AssertDatasetVsScript``` asserts that the data in the dataset ```suppliers-updated``` matches the data returned by the script ```select-all-suppliers```.
+
+```xml
+...
+    <script name="select-all-suppliers">
+      SELECT * FROM [dbo].[Supplier];
+    </script>
+...
+    <dataset name="suppliers-updated" table="Supplier">
+      <data>
+        <row Id="1" Name="supplier-1" ContactName="contact-name-1" ContactPhone="100-200-0001" ContactEmail="email-1@test.com" />
+        <row Id="2" Name="supplier-2-updated" ContactName="contact-name-2-updated" ContactPhone="100-200-9999" ContactEmail="email-2-updated@test.com" />
+        <row Id="3" Name="supplier-3" ContactName="contact-name-3" ContactPhone="100-200-0003" ContactEmail="email-3@test.com" />
+      </data>
+    </dataset>    
+```
 
 Example Project
 ---------------
