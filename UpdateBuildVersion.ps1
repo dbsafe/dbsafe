@@ -20,6 +20,12 @@ Get-ChildItem -Path $PSScriptRoot -Filter *.csproj -Recurse -File -Name | ForEac
                 $node.AssemblyVersion = $assemblyVersion
                 $updated = 1;
             }
+
+            $current = "[" + $node.FileVersion + "]"
+            if ($current -ne "[]") {
+                $node.FileVersion = $assemblyVersion
+                $updated = 1;
+            }
         }
     }
 
