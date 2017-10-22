@@ -19,7 +19,7 @@ namespace DbSafe
         IDbSafeManager RegisterFormatter(string columnName, IColumnFormatter formatter);
 
         void Completed();
-        void AssertDatasetVsScript(string expectedDatasetName, string actualScriptName, bool sorted, params string[] keys);
-        void AssertDatasetVsScript(string expectedDatasetName, string actualScriptName, params string[] keys);
+        void AssertDatasetVsScript(string expectedDatasetName, string actualScriptName, bool sorted, string key, params string[] otherKeys);
+        void AssertDatasetVsScript(string expectedDatasetName, string actualScriptName, string key, params string[] otherKeys);
     }
 }

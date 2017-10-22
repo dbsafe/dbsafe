@@ -1,6 +1,7 @@
 ﻿using DbSafe.FileDefinition;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
 
@@ -52,7 +53,7 @@ namespace DbSafe
             return this;
         }
 
-        public void AssertDatasetVsScript(string expectedDatasetName, string actualScriptName, bool sorted, params string[] keys)
+        public void AssertDatasetVsScript(string expectedDatasetName, string actualScriptName, bool sorted, string key, params string[] otherKeys)
         {
             ValidateDependencies();
 
@@ -60,12 +61,18 @@ namespace DbSafe
             ScriptElement actualDataScript = FindScript(actualScriptName);
             DatasetElement actualData = DatabaseClient.ReadTable(actualDataScript.Value, _formatterManager);
 
+            string[] keys = new string[] { key };
+            if (otherKeys != null)
+            {
+                keys = keys.Union(otherKeys).ToArray();
+            }            
+
             DbSafeManagerHelper.CompareDatasets(expectedData, actualData, keys, sorted, false);
         }
 
-        public void AssertDatasetVsScript(string expectedDatasetName, string actualScriptName, params string[] keys)
+        public void AssertDatasetVsScript(string expectedDatasetName, string actualScriptName, string key, params string[] otherKeys)
         {
-            AssertDatasetVsScript(expectedDatasetName, actualScriptName, false, keys);
+            AssertDatasetVsScript(expectedDatasetName, actualScriptName, false, key, otherKeys);
         }
 
         public IDbSafeManager RegisterFormatter(Type type, Func<object, string> func)
