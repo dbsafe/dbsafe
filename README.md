@@ -183,6 +183,50 @@ After ```UpdateSupplier(supplier2)``` is executed the method ```AssertDatasetVsS
     </dataset>    
 ```
 
+Column Formatters
+-----------------
+
+Values read from a table are converted to string to create an actual local dataset. The conversion depends on the local settings.
+
+**money**<br>
+The SQL Server data type `money` converts to a `string` with four decimal places.
+e.g. `101.10` is converted to `101.1000`.
+
+**datetime(s)**<br>
+A SQL Server `datatime2` by default converts to this format `1/1/2000 12:00:00 AM`.
+
+For making the tests more maintainable it is convenient to define custom formatters. Using custom formatters avoids having to write datasets with meaningless decimal places or dates with `00:00:00` in the time part.
+
+Method `RegisterFormatter` registering a formatter.
+
+Formatters:<br>
+A formatter can be a type that implements the interface `IColumnFormatter` or can be a function that takes an `object` and returns a `string`.
+
+A formatter can be registered for:
+
+**A table name and column name**:<br>
+The formatter will be used for a specific column in a specific table.<br>
+**A column name**:<br>
+The formatter will be used for a specific column in any table.<br>
+**A type**:<br>
+The formatter will be used for any columns that are of a specific type in any table.<br>
+
+The order of precedence is:
+table name and column name --> column name --> type
+
+There are two defined formatters:
+`DecimalFormatter` and `DateTimeFormatter`.
+
+In this example `DateTimeFormatter` is used to format all the columns that are of type `DateTime` using the format `"yyyy-MM-dd HH:mm:ss"`
+and to format all the columns called `ReleaseDate` truncating the time part. `DecimalFormatter` is used to convert all the columns that are of type `decimal` using two decimal places.
+
+```csharp
+_dbSafe.RegisterFormatter(typeof(DateTime), new DateTimeFormatter("yyyy-MM-dd HH:mm:ss"))
+                .RegisterFormatter("ReleaseDate", new DateTimeFormatter("yyyy-MM-dd"))
+                .RegisterFormatter(typeof(decimal), new DecimalFormatter("0.00"));
+```
+
+
 Example Project
 ---------------
 The repository [dbsafe-demo](https://github.com/dbsafe/dbsafe-demo) demonstrates how to use dbsafe to test a DAL component that connects to a SQL Server database.
