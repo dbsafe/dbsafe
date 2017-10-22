@@ -5,24 +5,30 @@ namespace DbSafe
 {
     public class FormatterManager
     {
-        private Dictionary<string, Func<object, string>> _formatters = new Dictionary<string, Func<object, string>>();
+        private Dictionary<string, IColumnFormatter> _formatters = new Dictionary<string, IColumnFormatter>();
 
         public void Register(Type type, Func<object, string> func)
         {
-            var key = $"formatter_type_{type.FullName}";
-            _formatters[key] = func;
+            var key = BuildKeyForType(type);
+            RegisterFormatterWithFunc(key, func);
         }
 
         public void Register(string tableName, string columnName, Func<object, string> func)
         {
-            var key = $"formatter_table_{tableName}_column_{columnName}";
-            _formatters[key] = func;
+
+            var key = BuildKeyForTableAndColumn(tableName, columnName);
+            RegisterFormatterWithFunc(key, func);
         }
 
         public void Register(string columnName, Func<object, string> func)
         {
-            var key = $"formatter_column_{columnName}";
-            _formatters[key] = func;
+            var key = BuildKeyForColumn(columnName);
+            RegisterFormatterWithFunc(key, func);
+        }
+
+        private void RegisterFormatterWithFunc(string key, Func<object, string> func)
+        {
+            _formatters[key] = new ActionFormatter(func);
         }
 
         public string Format(string tableName, string columnName, object value)
@@ -33,11 +39,11 @@ namespace DbSafe
             }
 
             var formatter = GetFormatter(tableName, columnName, value.GetType());
-            var result = formatter != null ? formatter(value) : value.ToString();
+            var result = formatter != null ? formatter.Format(value) : value.ToString();
             return result;
         }
 
-        private Func<object, string> GetFormatter(string tableName, string columnName, Type type)
+        private IColumnFormatter GetFormatter(string tableName, string columnName, Type type)
         {
             var formatter = Find(tableName, columnName);
             if (formatter != null)
@@ -54,27 +60,42 @@ namespace DbSafe
             return Find(type);
         }
 
-        private Func<object, string> Find(Type type)
+        private IColumnFormatter Find(Type type)
         {
-            var key = $"formatter_type_{type.FullName}";
+            var key = BuildKeyForType(type);
             return FindByKey(key);
         }
 
-        private Func<object, string> Find(string columnName)
+        private IColumnFormatter Find(string columnName)
         {
-            var key = $"formatter_column_{columnName}";
+            var key = BuildKeyForColumn(columnName);
             return FindByKey(key);
         }
 
-        private Func<object, string> Find(string tableName, string columnName)
+        private IColumnFormatter Find(string tableName, string columnName)
         {
-            var key = $"formatter_table_{tableName}_column_{columnName}";
+            var key = BuildKeyForTableAndColumn(tableName, columnName);
             return FindByKey(key);
         }
 
-        private Func<object, string> FindByKey(string key)
+        private IColumnFormatter FindByKey(string key)
         {
             return _formatters.ContainsKey(key) ? _formatters[key] : null;
+        }
+
+        private string BuildKeyForType(Type type)
+        {
+            return $"formatter_type_{type.FullName}";
+        }
+
+        private string BuildKeyForTableAndColumn(string tableName, string columnName)
+        {
+            return $"formatter_table_{tableName}_column_{columnName}";
+        }
+
+        private string BuildKeyForColumn(string columnName)
+        {
+            return $"formatter_column_{columnName}";
         }
     }
 }
