@@ -6,7 +6,7 @@ environment:
   api_key:
     secure: TFDaKD4TQc7hWomFzKAW6CDYnYqboEgFZ6a8d5+1T3J+RL647PsgqrlIXLHWjH19
   build_version: 1.0.1
-  package_version: 1.0.1-beta
+  package_version: 1.0.1
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
