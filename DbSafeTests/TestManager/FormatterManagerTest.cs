@@ -78,5 +78,28 @@ namespace DbSafeTests.TestManager
 
             Assert.AreEqual("registered-for-ColumnA", actual);
         }
+
+        [TestMethod]
+        public void Format_When_there_is_a_register_formatter_interface_It_must_be_used()
+        {
+            var formatter = new FakeIntFormatter();
+            _target.Register(typeof(int), formatter);
+            int value = 10;
+            var actual = _target.Format("TableC", "ColumnC", value);
+
+            Assert.AreEqual("int-formatter", actual);
+            Assert.AreEqual(10, formatter.LastValue);
+        }
+
+        private class FakeIntFormatter : IColumnFormatter
+        {
+            public object LastValue { get; set; }
+
+            public string Format(object value)
+            {
+                LastValue = value;
+                return "int-formatter";
+            }
+        }
     }
 }
