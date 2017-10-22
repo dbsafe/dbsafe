@@ -13,6 +13,12 @@ namespace DbSafe
             RegisterFormatterWithFunc(key, func);
         }
 
+        public void Register(Type type, IColumnFormatter formatter)
+        {
+            var key = BuildKeyForType(type);
+            _formatters[key] = formatter;
+        }
+
         public void Register(string tableName, string columnName, Func<object, string> func)
         {
 
@@ -20,10 +26,23 @@ namespace DbSafe
             RegisterFormatterWithFunc(key, func);
         }
 
+        public void Register(string tableName, string columnName, IColumnFormatter formatter)
+        {
+
+            var key = BuildKeyForTableAndColumn(tableName, columnName);
+            _formatters[key] = formatter;
+        }
+
         public void Register(string columnName, Func<object, string> func)
         {
             var key = BuildKeyForColumn(columnName);
             RegisterFormatterWithFunc(key, func);
+        }
+
+        public void Register(string columnName, IColumnFormatter formatter)
+        {
+            var key = BuildKeyForColumn(columnName);
+            _formatters[key] = formatter;
         }
 
         private void RegisterFormatterWithFunc(string key, Func<object, string> func)
