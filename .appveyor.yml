@@ -8,10 +8,10 @@ environment:
   build_version: 1.0.18
   
   # use for release
-  # package_version: 1.0.18
+  package_version: 1.0.18
 
   # use for beta
-  package_version: 1.0.18-beta
+  # package_version: 1.0.18-beta
   
 dotnet_csproj:
   patch: true
