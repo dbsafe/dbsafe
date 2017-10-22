@@ -1,4 +1,4 @@
-﻿using DbSafe.Formatters;
+﻿using DbSafe;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 

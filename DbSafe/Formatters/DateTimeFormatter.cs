@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DbSafe.Formatters
+namespace DbSafe
 {
     public class DateTimeFormatter : IColumnFormatter
     {
