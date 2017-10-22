@@ -11,7 +11,7 @@ dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: $(package_version).{build}
-  package_version: $(package_version).{build}
+  package_version: $(package_version)
 install:
 - cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/v4.3.0/nuget.exe
 nuget:
