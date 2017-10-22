@@ -74,15 +74,33 @@ namespace DbSafe
             return this;
         }
 
+        public IDbSafeManager RegisterFormatter(Type type, IColumnFormatter formatter)
+        {
+            _formatterManager.Register(type, formatter);
+            return this;
+        }
+
         public IDbSafeManager RegisterFormatter(string tableName, string columnName, Func<object, string> func)
         {
             _formatterManager.Register(tableName, columnName, func);
             return this;
         }
 
+        public IDbSafeManager RegisterFormatter(string tableName, string columnName, IColumnFormatter formatter)
+        {
+            _formatterManager.Register(tableName, columnName, formatter);
+            return this;
+        }
+
         public IDbSafeManager RegisterFormatter(string columnName, Func<object, string> func)
         {
             _formatterManager.Register(columnName, func);
+            return this;
+        }
+
+        public IDbSafeManager RegisterFormatter(string columnName, IColumnFormatter formatter)
+        {
+            _formatterManager.Register(columnName, formatter);
             return this;
         }
 
