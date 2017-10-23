@@ -1,4 +1,4 @@
-dbsafe – A helper library that supports writing database integration test for .NET
+dbsafe – [DAL + database] integration test for .NET
 ==================================================================================
 [![Build status](https://ci.appveyor.com/api/projects/status/vstibqep6yqfn6dr?svg=true)](https://ci.appveyor.com/project/valcarcelperez/dbsafe)
 
