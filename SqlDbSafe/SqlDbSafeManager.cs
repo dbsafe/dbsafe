@@ -43,6 +43,12 @@ namespace SqlDbSafe
             _databaseClient.ConnectionString = connectionStringDetail.ConnectionString;
             return this;
         }
+        
+        public SqlDbSafeManager PassConnectionString(string connectionString)
+        {
+            _databaseClient.ConnectionString = connectionString;
+            return this;
+        }
 
         protected override void ValidateDependencies(bool allowTestWithoutInputFile = false)
         {
