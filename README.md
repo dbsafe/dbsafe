@@ -8,7 +8,7 @@ dbsafe provides methods for populating a database, executing SQL commands, and c
 
 Supported databases
 -------------------
-MS SQL Server is supported by this [NuGet package]( https://www.nuget.org/packages/SqlDbSafe/)
+MS SQL Server is supported by this [NuGet package](https://www.nuget.org/packages/SqlDbSafe/)
 
 Input files
 -----------
@@ -54,8 +54,10 @@ The `<dataset>` elements contain data that can be used to populate a table or as
 
 Initialization
 --------------
-The static method `Initialize` returns the DbSafeManager instance that is used during the test. One or more input files can be passed as parameters. 
+The static method `Initialize` returns the DbSafeManager instance that is used during the test. One or more input files can be passed as parameters. <br>
 The method `SetConnectionString` passes the name of the connection string used by DbSafeManager.
+See the section [Connection String](#connection-string) for more options.
+
 The method `ExecuteScripts` can be used to clean the tables before the test data is loaded by the method `LoadTables`.
 
 ```csharp
@@ -109,7 +111,11 @@ The serialization of the tests is necessary to avoid tests competing for the sam
 
 Connection String
 -----------------
-Must be defined in the `app.config` file.
+`SetConnectionString` loads a connection string from an app.config. The connection string name must be defined in the `app.config` file.<br><br>
+Starting on version 1.0.19-beta2:
+<br>
+`PassConnectionString` passes a full connection string, this method must be used when the project does not have an app.config file.
+<br><br>
 The connection string used by `SqlDbSafeManager` is an ordinal ADO.NET connection string and cannot include any specific Entity Framework (or other object-relational mapper) metadata.
 
 Test
