@@ -194,16 +194,16 @@ Column Formatters
 
 Values read from a table are converted to string to create an actual local dataset. The conversion depends on the local settings.
 
-**money**<br>
-The SQL Server data type `money` converts to a `string` with four decimal places.
+**money, decimal**<br>
+SQL Server data type `money` converts to a `string` with four decimal places, decimals are converted using the number of decimal places of the type.
 e.g. `101.10` is converted to `101.1000`.
 
 **datetime(s)**<br>
-A SQL Server `datatime2` by default converts to this format `1/1/2000 12:00:00 AM`.
+SQL Server `datatime2` converts to this format `1/1/2000 12:00:00 AM` by default.
 
-For making the tests more maintainable it is convenient to define custom formatters. Using custom formatters avoids having to write datasets with meaningless decimal places or dates with `00:00:00` in the time part.
+Using custom formatters avoids having to write datasets with meaningless decimal places or dates with `00:00:00` in the time part.
 
-Method `RegisterFormatter` registering a formatter.
+Method `RegisterFormatter` registers a formatter.
 
 Formatters:<br>
 A formatter can be a type that implements the interface `IColumnFormatter` or can be a function that takes an `object` and returns a `string`.
@@ -220,7 +220,7 @@ The formatter will be used for any columns that are of a specific type in any ta
 The order of precedence is:
 table name and column name --> column name --> type
 
-There are two defined formatters:
+There are two defined formatters in dbsafe:
 `DecimalFormatter` and `DateTimeFormatter`.
 
 In this example `DateTimeFormatter` is used to format all the columns that are of type `DateTime` using the format `"yyyy-MM-dd HH:mm:ss"`
