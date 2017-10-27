@@ -243,9 +243,9 @@ Testing code that uses SQL Server functions
 -------------------------------------------
 Testing code that uses SQL Server functions, e.g. `GETDATE()`, is possible by wrapping the function inside a Stored Procedure (SP) and replacing the SP during the initialization of the test. This is demonstrated in the demo project.
 
-Testing code that access other databases
-----------------------------------------
-It is common that a View or Stored Procedure access another database or linked server. Code that access another database or linked server can be wrapped inside a View and the View can be replaced by a fake implementation during the initialization of the test.
+Testing code that accesses other databases
+------------------------------------------
+It is common that a View or Stored Procedure accesses another database or linked server. Code that accesses another database or linked server can be wrapped inside a View and the View can be replaced by a fake implementation during the initialization of the test.
 
 
 Example Project
