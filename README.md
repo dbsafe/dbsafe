@@ -239,6 +239,15 @@ Some teams configure database tests to run against a Development database. Using
 A dedicated test database used for running integration tests as part of the build process is the ideal choice.<br>
 The database deployment process must run before the integration test process to ensure that the DAL and the Database are on synch.
 
+Testing code that uses SQL Server functions
+-------------------------------------------
+Testing code that uses SQL Server functions, e.g. `GETDATE()`, is possible by wrapping the function inside a Stored Procedure (SP) and replacing the SP during the initialization of the test. This is demonstrated in the demo project.
+
+Testing code that access other databases
+----------------------------------------
+It is common that a View or Stored Procedure access another database or linked server. Code that access another database or linked server can be wrapped inside a View and the View can be replaced by a fake implementation during the initialization of the test.
+
+
 Example Project
 ---------------
 The repository [dbsafe-demo](https://github.com/dbsafe/dbsafe-demo) demonstrates how to use dbsafe to test a DAL component that connects to a SQL Server database.
