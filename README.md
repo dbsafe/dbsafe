@@ -58,7 +58,7 @@ The static method `Initialize` returns the DbSafeManager instance that is used d
 The method `SetConnectionString` passes the name of the connection string used by DbSafeManager.
 See the section [Connection String](#connection-string) for more options.
 
-The method `ExecuteScripts` can be used to clean the tables before the test data is loaded by the method `LoadTables`.
+The method `ExecuteScripts` can be used to clean the tables before the test data is loaded using the method `LoadTables`.
 
 ```csharp
  [TestClass]
@@ -112,9 +112,9 @@ The serialization of the tests is necessary to avoid tests competing for the sam
 Connection String
 -----------------
 `SetConnectionString` loads a connection string from an app.config. The connection string name must be defined in the `app.config` file.<br><br>
-Starting on version 1.0.19-beta2:
+Starting in version 1.0.19-beta2:
 <br>
-`PassConnectionString` passes a full connection string, this method must be used when the project does not have an app.config file.
+`PassConnectionString` passes a full connection string. This method must be used when the project does not have an app.config file.
 <br><br>
 The connection string used by `SqlDbSafeManager` is an ordinal ADO.NET connection string and cannot include any specific Entity Framework (or other object-relational mapper) metadata.
 
@@ -192,7 +192,7 @@ After ```UpdateSupplier(supplier2)``` is executed the method ```AssertDatasetVsS
 Column Formatters
 -----------------
 
-Values read from a table are converted to string to create an actual local dataset. The conversion depends on the local settings.
+Values read from a table are converted to a `string` to create an actual local dataset. The conversion depends on the local settings.
 
 **money, decimal**<br>
 SQL Server data type `money` converts to a `string` with four decimal places, decimals are converted using the number of decimal places of the type.
@@ -206,7 +206,7 @@ Using custom formatters avoids having to write datasets with meaningless decimal
 Method `RegisterFormatter` registers a formatter.
 
 Formatters:<br>
-A formatter can be a type that implements the interface `IColumnFormatter` or can be a function that takes an `object` and returns a `string`.
+A formatter can be a `class` that implements the `interface` `IColumnFormatter` or can be a function that takes an `object` and returns a `string`.
 
 A formatter can be registered for:
 
@@ -237,7 +237,7 @@ Database for running the tests
 Some teams configure database tests to run against a Development database. Using a Development database makes writing tests more challenging and the build process may fail when developers are developing in the same database.
 
 A dedicated test database used for running integration tests as part of the build process is the ideal choice.<br>
-The database deployment process must run before the integration test process to ensure that the DAL and the Database are on synch.
+The database deployment process must run before the integration test process to ensure that the DAL and the Database are in sync.
 
 Testing code that uses SQL Server functions
 -------------------------------------------
