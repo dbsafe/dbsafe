@@ -232,6 +232,12 @@ _dbSafe.RegisterFormatter(typeof(DateTime), new DateTimeFormatter("yyyy-MM-dd HH
                 .RegisterFormatter(typeof(decimal), new DecimalFormatter("0.00"));
 ```
 
+Database for running the tests
+------------------------------
+Some teams configure database tests to run against a Development database. Using a Development database makes writing tests more challenging and the build process may fail when developers are developing in the same database.
+
+A dedicated test database used for running integration tests as part of the build process is the ideal choice.<br>
+The database deployment process must run before the integration test process to ensure that the DAL and the Database are on synch.
 
 Example Project
 ---------------
