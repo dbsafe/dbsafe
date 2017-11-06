@@ -112,8 +112,6 @@ The serialization of the tests is necessary to avoid tests competing for the sam
 Connection String
 -----------------
 `SetConnectionString` loads a connection string from an app.config. The connection string name must be defined in the `app.config` file.<br><br>
-Starting in version 1.0.19-beta2:
-<br>
 `PassConnectionString` passes a full connection string. This method must be used when the project does not have an app.config file.
 <br><br>
 The connection string used by `SqlDbSafeManager` is an ordinal ADO.NET connection string and cannot include any specific Entity Framework (or other object-relational mapper) metadata.
