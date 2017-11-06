@@ -8,7 +8,7 @@ dbsafe provides methods for populating a database, executing SQL commands, and c
 
 Supported databases
 -------------------
-MS SQL Server is supported by this [NuGet package]( https://www.nuget.org/packages/SqlDbSafe/)
+MS SQL Server is supported by this [NuGet package](https://www.nuget.org/packages/SqlDbSafe/)
 
 Input files
 -----------
@@ -54,9 +54,11 @@ The `<dataset>` elements contain data that can be used to populate a table or as
 
 Initialization
 --------------
-The static method `Initialize` returns the DbSafeManager instance that is used during the test. One or more input files can be passed as parameters. 
+The static method `Initialize` returns the DbSafeManager instance that is used during the test. One or more input files can be passed as parameters. <br>
 The method `SetConnectionString` passes the name of the connection string used by DbSafeManager.
-The method `ExecuteScripts` can be used to clean the tables before the test data is loaded by the method `LoadTables`.
+See the section [Connection String](#connection-string) for more options.
+
+The method `ExecuteScripts` can be used to clean the tables before the test data is loaded using the method `LoadTables`.
 
 ```csharp
  [TestClass]
@@ -109,7 +111,11 @@ The serialization of the tests is necessary to avoid tests competing for the sam
 
 Connection String
 -----------------
-Must be defined in the `app.config` file.
+`SetConnectionString` loads a connection string from an app.config. The connection string name must be defined in the `app.config` file.<br><br>
+Starting in version 1.0.19-beta2:
+<br>
+`PassConnectionString` passes a full connection string. This method must be used when the project does not have an app.config file.
+<br><br>
 The connection string used by `SqlDbSafeManager` is an ordinal ADO.NET connection string and cannot include any specific Entity Framework (or other object-relational mapper) metadata.
 
 Test
@@ -186,21 +192,21 @@ After ```UpdateSupplier(supplier2)``` is executed the method ```AssertDatasetVsS
 Column Formatters
 -----------------
 
-Values read from a table are converted to string to create an actual local dataset. The conversion depends on the local settings.
+Values read from a table are converted to a `string` to create an actual local dataset. The conversion depends on the local settings.
 
-**money**<br>
-The SQL Server data type `money` converts to a `string` with four decimal places.
+**money, decimal**<br>
+SQL Server data type `money` converts to a `string` with four decimal places, decimals are converted using the number of decimal places of the type.
 e.g. `101.10` is converted to `101.1000`.
 
 **datetime(s)**<br>
-A SQL Server `datatime2` by default converts to this format `1/1/2000 12:00:00 AM`.
+SQL Server `datatime2` converts to this format `1/1/2000 12:00:00 AM` by default.
 
-For making the tests more maintainable it is convenient to define custom formatters. Using custom formatters avoids having to write datasets with meaningless decimal places or dates with `00:00:00` in the time part.
+Using custom formatters avoids having to write datasets with meaningless decimal places or dates with `00:00:00` in the time part.
 
-Method `RegisterFormatter` registering a formatter.
+Method `RegisterFormatter` registers a formatter.
 
 Formatters:<br>
-A formatter can be a type that implements the interface `IColumnFormatter` or can be a function that takes an `object` and returns a `string`.
+A formatter can be a `class` that implements the `interface` `IColumnFormatter` or can be a function that takes an `object` and returns a `string`.
 
 A formatter can be registered for:
 
@@ -214,7 +220,7 @@ The formatter will be used for any columns that are of a specific type in any ta
 The order of precedence is:
 table name and column name --> column name --> type
 
-There are two defined formatters:
+There are two defined formatters in dbsafe:
 `DecimalFormatter` and `DateTimeFormatter`.
 
 In this example `DateTimeFormatter` is used to format all the columns that are of type `DateTime` using the format `"yyyy-MM-dd HH:mm:ss"`
@@ -225,6 +231,21 @@ _dbSafe.RegisterFormatter(typeof(DateTime), new DateTimeFormatter("yyyy-MM-dd HH
                 .RegisterFormatter("ReleaseDate", new DateTimeFormatter("yyyy-MM-dd"))
                 .RegisterFormatter(typeof(decimal), new DecimalFormatter("0.00"));
 ```
+
+Database for running the tests
+------------------------------
+Some teams configure database tests to run against a Development database. Using a Development database makes writing tests more challenging and the build process may fail when developers are developing in the same database.
+
+A dedicated test database used for running integration tests as part of the build process is the ideal choice.<br>
+The database deployment process must run before the integration test process to ensure that the DAL and the Database are in sync.
+
+Testing code that uses SQL Server functions
+-------------------------------------------
+Testing code that uses SQL Server functions, e.g. `GETDATE()`, is possible by wrapping the function inside a Stored Procedure (SP) and replacing the SP during the initialization of the test. This is demonstrated in the demo project.
+
+Testing code that accesses other databases
+------------------------------------------
+It is common that a View or Stored Procedure accesses another database or linked server. Code that accesses another database or linked server can be wrapped inside a View and the View can be replaced by a fake implementation during the initialization of the test.
 
 
 Example Project
