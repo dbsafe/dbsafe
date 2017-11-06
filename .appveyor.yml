@@ -5,19 +5,19 @@ platform: Any CPU
 environment:
   api_key:
     secure: TFDaKD4TQc7hWomFzKAW6CDYnYqboEgFZ6a8d5+1T3J+RL647PsgqrlIXLHWjH19
-  build_version: 1.0.19
+  build_version: 1.0.20
   
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
 
   # use for release
-  version: $(build_version)
-  package_version: $(build_version)
+  # version: $(build_version)
+  # package_version: $(build_version)
 
   # use for beta
-  # version: $(build_version)-beta{build}
-  # package_version: $(build_version)-beta{build}
+  version: $(build_version)-beta{build}
+  package_version: $(build_version)-beta{build}
 install:
 - cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/v4.3.0/nuget.exe
 nuget:
