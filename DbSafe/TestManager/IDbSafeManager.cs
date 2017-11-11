@@ -12,9 +12,6 @@ namespace DbSafe
         IDbSafeManager RegisterFormatter(Type type, Func<object, string> func);
         IDbSafeManager RegisterFormatter(Type type, IColumnFormatter formatter);
 
-        IDbSafeManager RegisterFormatter(string tableName, string columnName, Func<object, string> func);
-        IDbSafeManager RegisterFormatter(string tableName, string columnName, IColumnFormatter formatter);
-
         IDbSafeManager RegisterFormatter(string columnName, Func<object, string> func);
         IDbSafeManager RegisterFormatter(string columnName, IColumnFormatter formatter);
 
