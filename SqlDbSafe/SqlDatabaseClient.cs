@@ -1,31 +1,17 @@
 ﻿using DbSafe;
 using DbSafe.FileDefinition;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 
 namespace SqlDbSafe
 {
     /// <summary>
     /// Defines a class that execute commands in a MS-SQL Server database.
     /// </summary>
-    public class SqlDatabaseClient : IDatabaseClient
+    public class SqlDatabaseClient : AdoDatabaseClient<SqlConnection, SqlCommand>
     {
-        public string ConnectionString { get; set; }
-
-        /// <summary>
-        /// Executes a SQL command.
-        /// </summary>
-        /// <param name="connectionString">A connection string</param>
-        /// <param name="command">A script to execute</param>
-        public void ExecuteCommand(string command)
-        {
-            ExecuteCommand(command, ConnectionString);
-        }
-
-        public void WriteTable(DatasetElement dataset)
+        public override void WriteTable(DatasetElement dataset)
         {
             if (dataset.Data != null)
             {
@@ -67,53 +53,8 @@ namespace SqlDbSafe
             }
         }
 
-        public DatasetElement ReadTable(string command, FormatterManager formatter)
-        {
-            DatasetElement result = new DatasetElement();
-            result.Data = new XElement("data");
+        protected override SqlConnection CreateDbConnection(string connectionString) => new SqlConnection(connectionString);
 
-            using (var adp = new SqlDataAdapter(command, ConnectionString))
-            {
-                using (DataSet ds = new DataSet())
-                {
-                    adp.Fill(ds);
-                    if (ds.Tables.Count == 0)
-                    {
-                        return result;
-                    }
-
-                    var table = ds.Tables[0];
-                    result.Table = table.TableName;
-
-                    for (int rowIndex = 0; rowIndex < table.Rows.Count; rowIndex++)
-                    {
-                        XElement xmlRow = new XElement("row");
-                        for (int columnIndex = 0; columnIndex < table.Columns.Count; columnIndex++)
-                        {
-                            var columnName = table.Columns[columnIndex].ColumnName;
-                            var value = formatter.Format(table.TableName, columnName, table.Rows[rowIndex].ItemArray[columnIndex]);
-                            var attribute = new XAttribute(columnName, value);
-                            xmlRow.Add(attribute);
-                        }
-
-                        result.Data.Add(xmlRow);
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        public static void ExecuteCommand(string command, string connectionString)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                using (SqlCommand comm = new SqlCommand(command, conn))
-                {
-                    comm.ExecuteNonQuery();
-                }
-            }
-        }
+        protected override SqlCommand CreateDbCommand(string command, SqlConnection conn) => new SqlCommand(command, conn);
     }
 }
