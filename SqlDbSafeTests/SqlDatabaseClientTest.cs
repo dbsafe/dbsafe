@@ -25,7 +25,7 @@ DELETE [dbo].[Supplier];
             _target.ExecuteCommand(deleteDataCommand);
         }
 
-        [Ignore("Uses Product_Build database from dbsafe-demo repo")]
+        // [Ignore("Uses Product_Build database from dbsafe-demo repo")]
         [TestMethod]
         public void Write_read_and_compare_records()
         {

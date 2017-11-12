@@ -46,8 +46,6 @@ namespace PgDbSafe
 
         protected override NpgsqlConnection CreateDbConnection(string connectionString) => new NpgsqlConnection(connectionString);
 
-        // This method is the same as the one in the base class.
-        // When using the method from the base class reader.GetColumnSchema() fails with a 'no supported error'
         public override DatasetElement ReadTable(string command, FormatterManager formatter)
         {
             DatasetElement result = new DatasetElement();
@@ -66,10 +64,11 @@ namespace PgDbSafe
                         XElement xmlRow = new XElement("row");
                         result.Data.Add(xmlRow);
 
-                        foreach (var dbColumn in reader.GetColumnSchema())
+                        for (int i = 0; i < reader.FieldCount; i++)
                         {
-                            var value = formatter.Format(tableSchema.TableName, dbColumn.ColumnName, reader[dbColumn.ColumnOrdinal.GetValueOrDefault()]);
-                            var attribute = new XAttribute(dbColumn.ColumnName, value);
+                            var columnName = reader.GetName(i);
+                            var value = formatter.Format(tableSchema.TableName, columnName, reader[i]);
+                            var attribute = new XAttribute(columnName, value);
                             xmlRow.Add(attribute);
                         }
                     }

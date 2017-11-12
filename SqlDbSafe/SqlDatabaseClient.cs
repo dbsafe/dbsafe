@@ -1,8 +1,10 @@
 ﻿using DbSafe;
 using DbSafe.FileDefinition;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SqlDbSafe
 {
@@ -11,6 +13,38 @@ namespace SqlDbSafe
     /// </summary>
     public class SqlDatabaseClient : AdoDatabaseClient<SqlConnection, SqlCommand>
     {
+        public override DatasetElement ReadTable(string command, FormatterManager formatter)
+        {
+            DatasetElement result = new DatasetElement();
+            result.Data = new XElement("data");
+
+            using (var conn = CreateDbConnection(ConnectionString))
+            {
+                conn.Open();
+                using (var comm = CreateDbCommand(command, conn))
+                {
+                    var reader = comm.ExecuteReader(CommandBehavior.KeyInfo);
+                    var tableSchema = reader.GetSchemaTable();
+                    result.Table = tableSchema.TableName;
+                    while (reader.Read())
+                    {
+                        XElement xmlRow = new XElement("row");
+                        result.Data.Add(xmlRow);
+
+                        for(int i = 0; i < reader.FieldCount; i++)
+                        {
+                            var columnName = reader.GetName(i);
+                            var value = formatter.Format(tableSchema.TableName, columnName, reader[i]);
+                            var attribute = new XAttribute(columnName, value);
+                            xmlRow.Add(attribute);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public override void WriteTable(DatasetElement dataset)
         {
             if (dataset.Data == null)

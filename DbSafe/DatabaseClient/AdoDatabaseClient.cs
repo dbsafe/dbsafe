@@ -1,7 +1,5 @@
 ﻿using DbSafe.FileDefinition;
-using System.Data;
 using System.Data.Common;
-using System.Xml.Linq;
 
 namespace DbSafe
 {
@@ -16,36 +14,7 @@ namespace DbSafe
             ExecuteCommand(command, ConnectionString);
         }
 
-        public virtual DatasetElement ReadTable(string command, FormatterManager formatter)
-        {
-            DatasetElement result = new DatasetElement();
-            result.Data = new XElement("data");
-
-            using (var conn = CreateDbConnection(ConnectionString))
-            {
-                conn.Open();
-                using (var comm = CreateDbCommand(command, conn))
-                {
-                    var reader = comm.ExecuteReader(CommandBehavior.KeyInfo);
-                    var tableSchema = reader.GetSchemaTable();
-                    result.Table = tableSchema.TableName;
-                    while (reader.Read())
-                    {
-                        XElement xmlRow = new XElement("row");
-                        result.Data.Add(xmlRow);
-
-                        foreach (var dbColumn in reader.GetColumnSchema())
-                        {
-                            var value = formatter.Format(tableSchema.TableName, dbColumn.ColumnName, reader[dbColumn.ColumnOrdinal.GetValueOrDefault()]);
-                            var attribute = new XAttribute(dbColumn.ColumnName, value);
-                            xmlRow.Add(attribute);
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
+        public abstract DatasetElement ReadTable(string command, FormatterManager formatter);
 
         public abstract void WriteTable(DatasetElement dataset);
 
