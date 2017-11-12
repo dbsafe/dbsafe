@@ -192,11 +192,11 @@ Column Formatters
 
 Values read from a table are converted to a `string` to create an actual local dataset. The conversion depends on the local settings.
 
-**money, decimal**<br>
+**money and decimal data types**<br>
 SQL Server data type `money` converts to a `string` with four decimal places, decimals are converted using the number of decimal places of the type.
 e.g. `101.10` is converted to `101.1000`.
 
-**datetime(s)**<br>
+**datetime(s) data type**<br>
 SQL Server `datatime2` converts to this format `1/1/2000 12:00:00 AM` by default.
 
 Using custom formatters avoids having to write datasets with meaningless decimal places or dates with `00:00:00` in the time part.
@@ -208,8 +208,6 @@ A formatter can be a `class` that implements the `interface` `IColumnFormatter` 
 
 A formatter can be registered for:
 
-**A table name and column name**:<br>
-The formatter will be used for a specific column in a specific table.<br>
 **A column name**:<br>
 The formatter will be used for a specific column in any table.<br>
 **A type**:<br>
