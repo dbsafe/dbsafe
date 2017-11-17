@@ -5,29 +5,23 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>Ernesto Valcarcel</Authors>
-    <Description>DbSafe supports the creation of automated integration test for code that access a database.</Description>
+    <Description>PgDbSafe supports the creation of automated integration test for code that access a PostgreSQL database.</Description>
+    <Copyright>Copyright (c) 2017 dbsafe</Copyright>
+    <PackageLicenseUrl>https://github.com/dbsafe/dbsafe/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/dbsafe/dbsafe</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dbsafe/dbsafe</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/dbsafe/dbsafe/blob/master/LICENSE</PackageLicenseUrl>
-    <Copyright>Copyright (c) 2017 dbsafe</Copyright>
     <Version>1.0.1</Version>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
     <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>portable</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-
   <ItemGroup>
-    <Folder Include="FileDefinition\" />
+    <PackageReference Include="Npgsql" Version="3.2.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0" />
+    <ProjectReference Include="..\DbSafe\DbSafe.csproj" />
   </ItemGroup>
 
 </Project>

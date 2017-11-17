@@ -1,13 +1,10 @@
 ﻿using DbSafe;
-using System;
-using System.Configuration;
+using System.Data.SqlClient;
 
 namespace SqlDbSafe
 {
-    public class SqlDbSafeManager : DbSafeManager<SqlDatabaseClient>
+    public class SqlDbSafeManager : AdoDbSafeManager<SqlDatabaseClient, SqlConnection, SqlCommand>
     {
-        private readonly SqlDatabaseClient _databaseClient = new SqlDatabaseClient();
-
         public static SqlDbSafeManager Initialize(DbSafeManagerConfig config, params string[] filenames)
         {
             var result = new SqlDbSafeManager(config);
@@ -26,38 +23,8 @@ namespace SqlDbSafe
         }
 
         private SqlDbSafeManager(DbSafeManagerConfig config)
-            : base(config)
+            : base(config, new SqlDatabaseClient())
         {
-            DatabaseClient = _databaseClient;
-        }
-
-        public SqlDbSafeManager SetConnectionString(string connectionStringName)
-        {
-            var connectionStringDetail = ConfigurationManager.ConnectionStrings[connectionStringName];
-            if (connectionStringDetail == null)
-            {
-                string message = $"Connection String '{connectionStringName}' not found";
-                throw new Exception(message);
-            }
-
-            _databaseClient.ConnectionString = connectionStringDetail.ConnectionString;
-            return this;
-        }
-        
-        public SqlDbSafeManager PassConnectionString(string connectionString)
-        {
-            _databaseClient.ConnectionString = connectionString;
-            return this;
-        }
-
-        protected override void ValidateDependencies(bool allowTestWithoutInputFile = false)
-        {
-            base.ValidateDependencies(allowTestWithoutInputFile);
-
-            if (string.IsNullOrWhiteSpace(_databaseClient.ConnectionString))
-            {
-                throw new InvalidOperationException("ConnectionString not specified");
-            }
         }
     }
 }

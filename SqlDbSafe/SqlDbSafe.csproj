@@ -17,7 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
   </ItemGroup>
 
