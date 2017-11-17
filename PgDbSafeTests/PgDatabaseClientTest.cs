@@ -15,7 +15,7 @@ namespace PgDbSafeTests
         public void Initialize()
         {
             _target = new PgDatabaseClient();
-            _target.ConnectionString = "Host=localhost;Database=product;Username=dbsafe;Password=dbsafe";
+            _target.ConnectionString = "Host=localhost;Database=product_build;Username=dbsafe;Password=dbsafe";
 
             var deleteDataCommand = @"
 DELETE FROM public.product;
