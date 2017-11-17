@@ -9,6 +9,8 @@ dbsafe provides methods for populating a database, executing SQL commands, and c
 Supported databases
 -------------------
 MS SQL Server is supported by this [NuGet package](https://www.nuget.org/packages/SqlDbSafe/)
+<br>
+PostgreSQL is supported by this [NuGet package](https://www.nuget.org/packages/PgDbSafe/)
 
 Input files
 -----------
