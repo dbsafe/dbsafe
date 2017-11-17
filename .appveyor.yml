@@ -13,12 +13,12 @@ dotnet_csproj:
   file: '**\*.csproj'
 
   # use for release
-  # version: $(build_version)
-  # package_version: $(build_version)
+  version: $(build_version)
+  package_version: $(build_version)
 
   # use for beta
-  version: $(build_version)-beta{build}
-  package_version: $(build_version)-beta{build}
+  # version: $(build_version)-beta{build}
+  # package_version: $(build_version)-beta{build}
 install:
 - cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/v4.3.0/nuget.exe
 nuget:
