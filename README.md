@@ -12,6 +12,10 @@ MS SQL Server is supported by this [NuGet package](https://www.nuget.org/package
 <br>
 PostgreSQL is supported by this [NuGet package](https://www.nuget.org/packages/PgDbSafe/)
 
+Example Project
+---------------
+The repository [dbsafe-demo](https://github.com/dbsafe/dbsafe-demo) demonstrates how to use dbsafe to test DAL components that connect to SQL Server and PostgreSQL.
+
 Input files
 -----------
 dbsafe uses one or more xml input files with SQL scripts and datasets.
@@ -244,9 +248,3 @@ Testing code that uses SQL Server functions, e.g. `GETDATE()`, is possible by wr
 Testing code that accesses other databases
 ------------------------------------------
 It is common that a View or Stored Procedure accesses another database or linked server. Code that accesses another database or linked server can be wrapped inside a View and the View can be replaced by a fake implementation during the initialization of the test.
-
-
-Example Project
----------------
-The repository [dbsafe-demo](https://github.com/dbsafe/dbsafe-demo) demonstrates how to use dbsafe to test a DAL component that connects to a SQL Server database.
-
