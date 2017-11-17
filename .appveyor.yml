@@ -2,9 +2,11 @@ version: $(build_version).{build}
 image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
+
 skip_commits:
   files:
-    - *.md
+    - readme.md
+    
 environment:
   api_key:
     secure: TFDaKD4TQc7hWomFzKAW6CDYnYqboEgFZ6a8d5+1T3J+RL647PsgqrlIXLHWjH19
