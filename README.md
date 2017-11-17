@@ -248,3 +248,4 @@ Testing code that uses SQL Server functions, e.g. `GETDATE()`, is possible by wr
 Testing code that accesses other databases
 ------------------------------------------
 It is common that a View or Stored Procedure accesses another database or linked server. Code that accesses another database or linked server can be wrapped inside a View and the View can be replaced by a fake implementation during the initialization of the test.
+
