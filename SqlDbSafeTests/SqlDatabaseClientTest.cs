@@ -9,26 +9,37 @@ namespace SqlDbSafeTests
     [TestClass]
     public class SqlDatabaseClientTest
     {
-        private SqlDatabaseClient _target;
+        private string _connectionString = "data source=localhost;initial catalog=Product_Build;integrated security=True;MultipleActiveResultSets=True;App=SqlDatabaseClientTest";
 
-        [TestInitialize]
-        public void Initialize()
+        private string _createGlobalTempTableCommand = @"
+            IF OBJECT_ID('tempdb.dbo.##GlobalTempTable') IS NOT NULL
+            BEGIN
+                DROP TABLE ##GlobalTempTable
+            END;
+
+            CREATE TABLE ##GlobalTempTable (col1 INT PRIMARY KEY);
+";
+
+        private string _verifyIfTempTableExistsQuery = @"
+            IF OBJECT_ID('tempdb.dbo.##GlobalTempTable') IS NOT NULL
+                SELECT '1' AS TempTableExists
+            ELSE
+                SELECT '0' AS TempTableExists;
+";
+
+        // [Ignore("Uses Product_Build database from dbsafe-demo repo")]
+        [TestMethod]
+        public void Write_read_and_compare_records()
         {
-            _target = new SqlDatabaseClient();
-            _target.ConnectionString = "data source=localhost;initial catalog=Product_Build;integrated security=True;MultipleActiveResultSets=True;App=SqlDatabaseClientTest";
+            var target = new SqlDatabaseClient(false) { ConnectionString = _connectionString };
 
             var deleteDataCommand = @"
 DELETE [dbo].[Product];
 DELETE [dbo].[Category];
 DELETE [dbo].[Supplier];
 ";
-            _target.ExecuteCommand(deleteDataCommand);
-        }
+            target.ExecuteCommand(deleteDataCommand);
 
-        // [Ignore("Uses Product_Build database from dbsafe-demo repo")]
-        [TestMethod]
-        public void Write_read_and_compare_records()
-        {
             var datasetXml = @"
 <dataset name=""suppliers"" setIdentityInsert=""true"" table=""Supplier"">
   <data>
@@ -41,15 +52,62 @@ DELETE [dbo].[Supplier];
             var xml = XElement.Parse(datasetXml);
             var dataset = DatasetElement.Load(xml);
 
-            _target.WriteTable(dataset);
+            target.WriteTable(dataset);
 
             var formatterManager = new FormatterManager();
 
             var selectRecordsQuery = "SELECT * FROM [dbo].[Supplier];";
 
-            var actual = _target.ReadTable(selectRecordsQuery, formatterManager);
+            var actual = target.ReadTable(selectRecordsQuery, formatterManager);
 
             DbSafeManagerHelper.CompareDatasets(dataset, actual, new string[] { "Id" }, false, false);
+        }
+
+        [TestMethod]
+        public void Connection_is_not_reused()
+        {
+            // This test uses a global temp table (GTT) since a GTT is deleted when the connection that created it goes out of scope.
+            var target = new SqlDatabaseClient(false) { ConnectionString = _connectionString };
+
+            target.ExecuteCommand(_createGlobalTempTableCommand);
+
+            var formatterManager = new FormatterManager();
+            var actual = target.ReadTable(_verifyIfTempTableExistsQuery, formatterManager);
+
+            var expectedDatasetXml = @"
+<dataset name=""a-name"" table=""a-name"">
+  <data>
+    <row TempTableExists=""0"" />
+  </data>
+</dataset>
+";
+            var xml = XElement.Parse(expectedDatasetXml);
+            var expectedDataset = DatasetElement.Load(xml);
+
+            Assert.AreEqual(expectedDataset.Data.ToString(), actual.Data.ToString());
+        }
+
+        [TestMethod]
+        public void Connection_is_reused_when_configured()
+        {
+            // This test uses a global temp table (GTT) since a GTT is deleted when the connection that created it goes out of scope.
+            var target = new SqlDatabaseClient(true) { ConnectionString = _connectionString };
+            target.ExecuteCommand(_createGlobalTempTableCommand);
+
+            var formatterManager = new FormatterManager();
+            var actual = target.ReadTable(_verifyIfTempTableExistsQuery, formatterManager);
+
+            var expectedDatasetXml = @"
+<dataset name=""a-name"" table=""a-name"">
+  <data>
+    <row TempTableExists=""1"" />
+  </data>
+</dataset>
+";
+            var xml = XElement.Parse(expectedDatasetXml);
+            var expectedDataset = DatasetElement.Load(xml);
+
+            Assert.AreEqual(expectedDataset.Data.ToString(), actual.Data.ToString());
         }
     }
 }

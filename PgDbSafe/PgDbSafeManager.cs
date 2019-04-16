@@ -23,7 +23,7 @@ namespace PgDbSafe
         }
 
         private PgDbSafeManager(DbSafeManagerConfig config)
-            : base(config, new PgDatabaseClient())
+            : base(config, new PgDatabaseClient(config.ReuseConnection))
         {
         }
     }
