@@ -1,3 +1,4 @@
-# MSBuild
-# Build with MSBuild
 - task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    restoreNugetPackages: true
