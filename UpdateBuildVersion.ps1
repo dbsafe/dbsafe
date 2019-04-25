@@ -32,6 +32,8 @@ Get-ChildItem -Path $PSScriptRoot -Filter *.csproj -Recurse -File -Name | ForEac
     if ($updated -eq 1) {
         Write-Host Updated Project: $projectName
         $xml.Save($projectName)
+        
+        Get-Content $projectName | foreach {Write-Output $_}
     }
 }
 
