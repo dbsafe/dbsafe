@@ -10,6 +10,8 @@ namespace PgDbSafe
 {
     public class PgDatabaseClient : AdoDatabaseClient<NpgsqlConnection, NpgsqlCommand>
     {
+        public PgDatabaseClient(bool reuseConnection) : base(reuseConnection) { }
+
         public override void WriteTable(DatasetElement dataset)
         {
             if (dataset.Data == null)

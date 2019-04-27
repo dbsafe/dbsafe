@@ -6,5 +6,7 @@
 
         public bool SerializeTests { get; set; } = true;
         public bool IsGlobalConfig { get; private set; } = false;
+
+        public bool ReuseConnection { get; private set; } = false;
     }
 }

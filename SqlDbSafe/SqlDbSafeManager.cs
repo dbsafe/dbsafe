@@ -23,7 +23,7 @@ namespace SqlDbSafe
         }
 
         private SqlDbSafeManager(DbSafeManagerConfig config)
-            : base(config, new SqlDatabaseClient())
+            : base(config, new SqlDatabaseClient(config.ReuseConnection))
         {
         }
     }

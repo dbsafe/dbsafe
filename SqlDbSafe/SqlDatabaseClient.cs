@@ -1,5 +1,6 @@
 ﻿using DbSafe;
 using DbSafe.FileDefinition;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace SqlDbSafe
     /// </summary>
     public class SqlDatabaseClient : AdoDatabaseClient<SqlConnection, SqlCommand>
     {
+        public SqlDatabaseClient(bool reuseConnection) : base(reuseConnection) { }
+
         public override DatasetElement ReadTable(string command, FormatterManager formatter)
         {
             DatasetElement result = new DatasetElement();
@@ -31,7 +34,7 @@ namespace SqlDbSafe
                         XElement xmlRow = new XElement("row");
                         result.Data.Add(xmlRow);
 
-                        for(int i = 0; i < reader.FieldCount; i++)
+                        for (int i = 0; i < reader.FieldCount; i++)
                         {
                             var columnName = reader.GetName(i);
                             var value = formatter.Format(tableSchema.TableName, columnName, reader[i]);
