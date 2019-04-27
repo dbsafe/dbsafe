@@ -101,11 +101,36 @@ The initialization methods can be called as chainable methods.
         }
 ```
 
+Configuration
+-------------
+
+There is an overload of `Initialize` that takes an instance of `DbSafeManagerConfig`.
+
+```csharp
+        [TestInitialize]
+        public void Initialize()
+        {
+            var dbSafeConfig = new DbSafeManagerConfig { SerializeTests = true, ReuseConnection = true };
+            _dbSafe = SqlDbSafeManager.Initialize(dbSafeConfig, "product-db-test.xml")
+                
+            // ...
+        }
+```
+
+When calling `Initialize` without passing a DbSafeManagerConfig a default  static configuration is used. `DbSafeManagerConfig.GlobalConfig` is the instance of the default configuration.
+
+**Properties of `DbSafeManagerConfig`**
+
+Property Name | Type | Description
+--------------|------|------------
+SerializeTests | boolean | Default: true. Indicates whether the tests should be serialized
+ReuseConnection | boolean | Default: false. Indicates whether DbSafe should reuse the database connection
+
 Test Completion
 ---------------
 Test executions are serialized by default, the method `Initialize` gets a lock and other tests will have to wait for the test that has the lock to complete. At the end of each test the method `Completed` must be called to release the lock.
 
-The serialization of the tests is necessary to avoid tests competing for the same data when running at the same time. If the tests are designed to use different data they can run in parallel by setting `Config.SerializeTests` to `false`.
+The serialization of the tests is necessary to avoid tests competing for the same data when running at the same time. If the tests are designed to use different data they can run in parallel by setting the configuration property `SerializeTests` to `false`.
 
 ```csharp
         [TestCleanup]
