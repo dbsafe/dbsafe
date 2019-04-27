@@ -1,4 +1,4 @@
-param([string]$assemblyVersion)
+param([string]$assemblyVersion, [string]$prereleaseLabel)
 $ErrorActionPreference = "Stop"
 
 Write-Host Setting AssemblyVersion to: $assemblyVersion
@@ -26,12 +26,20 @@ Get-ChildItem -Path $PSScriptRoot -Filter *.csproj -Recurse -File -Name | ForEac
                 $node.FileVersion = $assemblyVersion
                 $updated = 1;
             }
+            
+            $current = "[" + $node.Version + "]"
+            if ($current -ne "[]") {
+                $node.Version = $assemblyVersion + $prereleaseLabel
+                $updated = 1;
+            }
         }
     }
 
     if ($updated -eq 1) {
         Write-Host Updated Project: $projectName
         $xml.Save($projectName)
+        
+        Get-Content $projectName | foreach {Write-Output $_}
     }
 }
 
