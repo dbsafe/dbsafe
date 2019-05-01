@@ -34,7 +34,7 @@ namespace SqlDbSafe
                         XElement xmlRow = new XElement("row");
                         result.Data.Add(xmlRow);
 
-                        for (int i = 0; i < reader.FieldCount; i++)
+                        for (int i = 0; i < reader.VisibleFieldCount; i++)
                         {
                             var columnName = reader.GetName(i);
                             var value = formatter.Format(tableSchema.TableName, columnName, reader[i]);
