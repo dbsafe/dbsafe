@@ -81,9 +81,9 @@ namespace DbSafe
         {
             var summary = $@"
 Expected:
-{expected.ToString()}
+{expected}
 Actual:
-{actual.ToString()}
+{actual}
 ";
             UnitTesting.Assert.AreEqual(expected.Attributes().Count(), actual.Attributes().Count(), $"The number of attributes are not the same. {summary}");
 
@@ -105,7 +105,7 @@ Actual:
                     var attribute = element.Attribute(keyAndValue.Key);
                     if (attribute == null)
                     {
-                        throw new InvalidOperationException($"Key attribute '{keyAndValue.Key}' not found. Element: {element.ToString()}");
+                        throw new InvalidOperationException($"Key attribute '{keyAndValue.Key}' not found. Element: {element}");
                     }
                 }
             }
