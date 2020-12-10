@@ -8,9 +8,9 @@ namespace DbSafe
             where TDbConnection : DbConnection
             where TDbCommand : DbCommand
     {
-        private bool _reuseConnection = false;
-        private Dictionary<string, TDbConnection> _connections = new Dictionary<string, TDbConnection>();
-        private object _lock = new object();
+        private readonly bool _reuseConnection = false;
+        private readonly Dictionary<string, TDbConnection> _connections = new Dictionary<string, TDbConnection>();
+        private readonly object _lock = new object();
 
         public string ConnectionString { get; set; }
 
