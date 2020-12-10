@@ -16,7 +16,7 @@ namespace PgDbSafeTests
         {
             _target = new PgDatabaseClient(false)
             {
-                ConnectionString = "Host=localhost;Database=product_build;Username=dbsafe;Password=dbsafe"
+                ConnectionString = "Host=localhost;Port=5432;Database=dbsafe;Username=dbsafe;Password=dbsafe"
             };
 
             var deleteDataCommand = @"
