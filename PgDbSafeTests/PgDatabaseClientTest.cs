@@ -6,6 +6,8 @@ using System.Xml.Linq;
 
 namespace PgDbSafeTests
 {
+    // This test uses a postgres database that can be created in a docker container.
+    // Find the steps to create the container in db\docker.txt
     [TestClass]
     public class PgDatabaseClientTest
     {
@@ -27,7 +29,6 @@ DELETE FROM public.supplier;
             _target.ExecuteCommand(deleteDataCommand);
         }
 
-        // [Ignore("Uses Product_Build database from dbsafe-demo repo")]
         [TestMethod]
         public void Write_read_and_compare_records()
         {
