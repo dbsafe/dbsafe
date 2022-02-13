@@ -30,6 +30,9 @@ stages:
       #   displayName: Tests DbSafe project
       - script: git clone https://github.com/dbsafe/dbsafe-pg-db
         displayName: Checkout test database
-      - script: docker-compose up --build -d -f ./dbsafe-pg-db/docker-compose.yml
+      - script: docker-compose -f ./dbsafe-pg-db/docker-compose.yml up --build -d
+        displayName: Start container with PostgreSql database
+      - script: docker ps
+        displayName: Print Docker containers
         
   
