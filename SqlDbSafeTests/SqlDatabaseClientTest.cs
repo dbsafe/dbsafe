@@ -11,7 +11,11 @@ namespace SqlDbSafeTests
     [TestClass]
     public class SqlDatabaseClientTest
     {
-        private readonly string _connectionString = @"data source=(localdb)\ProjectModels;initial catalog=ProductDatabase;integrated security=True;MultipleActiveResultSets=True;App=SqlDatabaseClientTest";
+        // Database deployed to localhost
+        private readonly string _connectionString = @"data source=localhost;initial catalog=ProductDatabase;User ID=dbsafe;Password=dbsafe;MultipleActiveResultSets=True;App=SqlDatabaseClientTest";
+
+        // Database deployed to (localdb)\ProjectModels
+        // private readonly string _connectionString = @"data source=(localdb)\ProjectModels;initial catalog=ProductDatabase;integrated security=True;MultipleActiveResultSets=True;App=SqlDatabaseClientTest";
 
         private readonly string _createGlobalTempTableCommand = @"
             IF OBJECT_ID('tempdb.dbo.##GlobalTempTable') IS NOT NULL
