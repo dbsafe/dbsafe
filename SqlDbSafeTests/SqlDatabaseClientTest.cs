@@ -7,7 +7,7 @@ using System.Xml.Linq;
 namespace SqlDbSafeTests
 {
     // This test uses a MS-SQL Server database from
-    // https://github.com/dbsafe/docker-sql-db
+    // https://github.com/dbsafe/dbsafe-sql-db
     [TestClass]
     public class SqlDatabaseClientTest
     {
