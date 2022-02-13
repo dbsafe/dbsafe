@@ -10,8 +10,6 @@
     <PackageProjectUrl>https://github.com/dbsafe/dbsafe</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dbsafe/dbsafe</RepositoryUrl>
     <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
     <IncludeSymbols>True</IncludeSymbols>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
