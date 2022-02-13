@@ -9,10 +9,10 @@ stages:
   displayName: Build and test
   jobs:
     - job: BuildAndTest
-    displayName: Build and test
+      displayName: Build and test
       steps:
       - script: dotnet build
-      displayName: Build solution
+        displayName: Build solution
       - script: dotnet test .\DbSafeTests\
-      displayName: Tests DbSafe project
+        displayName: Tests DbSafe project
   
