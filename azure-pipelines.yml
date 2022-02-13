@@ -19,8 +19,14 @@ stages:
       steps:
       - script: dotnet build /warnaserror --configuration Release -p:Version=$(_version) -p:PackageVersion=$(_packageVersion)
         displayName: Build solution
-      - script: dotnet test ./DbSafeTests/
+      # - script: dotnet test ./DbSafeTests/
+      #   displayName: Tests DbSafe project
+
+      - task: DotNetCoreCLI@2
         displayName: Tests DbSafe project
+        inputs:
+          command: 'test'
+          projects: './DbSafeTests/'
 
       # - script: git clone https://github.com/dbsafe/dbsafe-pg-db
       #   displayName: Checkout PostgreSql test database
@@ -44,8 +50,3 @@ stages:
   
       # - script: dotnet test ./SqlDbSafeTests/
       #   displayName: Tests SqlDbSafe project
-      
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFormat: 'VSTest'
-          testResultsFiles: '**/TEST-*.xml'
