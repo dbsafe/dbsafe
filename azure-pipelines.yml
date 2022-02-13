@@ -1,0 +1,13 @@
+trigger:
+- main
+
+pool: 
+  vmImage: ubuntu-latest
+
+stages:
+- stage: build
+  displayName: Build
+  jobs:
+    - job: Build solution
+      steps:
+      - script: dotnet build
