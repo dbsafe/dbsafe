@@ -4,6 +4,9 @@ variables:
   - name: _packageVersion
     value: $(_version)$(PrereleaseLabel)
 
+resources:
+ containers:
+   - 
 
 trigger:
 - main
@@ -18,18 +21,19 @@ stages:
     - job: BuildAndTest
       displayName: Build and test
       steps:
-      - script: sqllocaldb info
-        displayName: Print localdb info
+      # - script: sqllocaldb info
+      #   displayName: Print localdb info
 
-      # - script: dotnet --version
-      #   displayName: Print dotnet version
+      - script: dotnet --version
+        displayName: Print dotnet version
       # - script: dotnet build /warnaserror --configuration Release -p:Version=$(_version) -p:PackageVersion=$(_packageVersion)
       #   displayName: Build solution
       # - script: ls
       #   displayName: Print current location
       # - script: dotnet test ./DbSafeTests/
       #   displayName: Tests DbSafe project
-      # - script: git clone https://github.com/dbsafe/dbsafe-pg-db
-      #   displayName: Checkout test database
+      - script: git clone https://github.com/dbsafe/dbsafe-pg-db
+        displayName: Checkout test database
+      - script: docker-compose up --build -d -f ./dbsafe-pg-db/docker-compose.yml
         
   
