@@ -11,3 +11,9 @@ stages:
     - job: BuildSolution
       steps:
       - script: dotnet build
+
+    - job: DbSafeTest
+      steps:
+      - script: dotnet test .\DbSafeTests\
+
+  
