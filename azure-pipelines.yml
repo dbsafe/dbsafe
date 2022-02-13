@@ -5,9 +5,9 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-- stage: build
+- stage: CI
   displayName: Build
   jobs:
-    - job: Build solution
+    - job: BuildSolution
       steps:
       - script: dotnet build
