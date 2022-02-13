@@ -26,7 +26,7 @@ stages:
         displayName: Tests DbSafe project
         inputs:
           command: 'test'
-          projects: './DbSafeTests/'
+          projects: './DbSafeTests/DbSafeTests.csproj'
 
       # - script: git clone https://github.com/dbsafe/dbsafe-pg-db
       #   displayName: Checkout PostgreSql test database
