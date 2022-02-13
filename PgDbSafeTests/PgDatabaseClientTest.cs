@@ -6,8 +6,8 @@ using System.Xml.Linq;
 
 namespace PgDbSafeTests
 {
-    // This test uses a postgres database that can be created in a docker container.
-    // Find the steps to create the container in db\docker.txt
+    // This test uses a postgres database from
+    // https://github.com/dbsafe/dbsafe-pg-db
     [TestClass]
     public class PgDatabaseClientTest
     {
