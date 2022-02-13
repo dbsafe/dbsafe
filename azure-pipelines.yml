@@ -1,6 +1,8 @@
 variables:
   - name: _version
-    value: $(VERSIONMAJOR).$(VERSIONMINOR).$(VERSIONPATCH).$(Build.BuildId)
+    value: $(VersionMajor).$(VersionMinor).$(VersionPatch).$(Build.BuildId)
+  - name: _packageVersion
+    value: $(_version)$(PrereleaseLabel)
 
 
 trigger:
@@ -18,7 +20,7 @@ stages:
       steps:
       - script: dotnet --version
         displayName: Print dotnet version
-      - script: dotnet build --configuration Release -p:PackageVersion=$(_version) -p:Version=$(_version)
+      - script: dotnet build /warnaserror --configuration Release -p:Version=$(_version) -p:PackageVersion=$(_packageVersion)
         displayName: Build solution
       - script: ls
         displayName: Print current location
