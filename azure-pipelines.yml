@@ -1,3 +1,8 @@
+variables:
+  - name: _version
+    value: $(VERSIONMAJOR).$(VERSIONMINOR).$(VERSIONPATCH).$(Build.BuildId)
+
+
 trigger:
 - main
 
@@ -13,7 +18,7 @@ stages:
       steps:
       - script: dotnet --version
         displayName: Print dotnet version
-      - script: dotnet build --configuration Release
+      - script: dotnet build --configuration Release -p:PackageVersion=$(_version) -p:Version=$(_version)
         displayName: Build solution
       - script: ls
         displayName: Print current location
