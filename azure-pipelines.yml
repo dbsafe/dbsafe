@@ -17,6 +17,6 @@ stages:
         displayName: Build solution
       - script: ls
         displayName: Print current location
-      - script: dotnet test .\DbSafeTests\
+      - script: dotnet test /DbSafeTests/
         displayName: Tests DbSafe project
   
