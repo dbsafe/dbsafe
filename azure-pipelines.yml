@@ -19,8 +19,6 @@ stages:
       steps:
       - script: dotnet build /warnaserror --configuration Release -p:Version=$(_version) -p:PackageVersion=$(_packageVersion)
         displayName: Build solution
-      # - script: dotnet test ./DbSafeTests/
-      #   displayName: Tests DbSafe project
 
       - task: DotNetCoreCLI@2
         displayName: Tests DbSafe project
