@@ -30,7 +30,7 @@ stages:
       #   displayName: Print Docker containers
         
       # - script: dotnet test ./PgDbSafeTests/
-      #   displayName: Tests PgDbSafe project        
+      #   displayName: Tests PgDbSafe project
         
 
       - script: git clone https://github.com/dbsafe/dbsafe-sql-db
@@ -38,5 +38,9 @@ stages:
       - script: docker-compose -f ./dbsafe-sql-db/docker-compose.yml up --build -d
         displayName: Start container with MS-SQL Server
       - script: docker ps
-        displayName: Print Docker containers        
+        displayName: Print Docker containers
+      - script: sqlcmd -S localhost -U sa -P "yourStrong(!)Password" -i ProductDatabase.sql
+        displayName: Deploy database using script
   
+      - script: dotnet test ./SqlDbSafeTests/
+        displayName: Tests SqlDbSafe project
