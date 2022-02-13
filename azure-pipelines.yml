@@ -17,29 +17,26 @@ stages:
     - job: BuildAndTest
       displayName: Build and test
       steps:
-      # - script: sqllocaldb info
-      #   displayName: Print localdb info
-      
-      - script: sqlcmd
-        displayName: Check if build server has sqlcmd
-
-      # - script: dotnet --version
-      #   displayName: Print dotnet version
       - script: dotnet build /warnaserror --configuration Release -p:Version=$(_version) -p:PackageVersion=$(_packageVersion)
         displayName: Build solution
-      # - script: ls
-      #   displayName: Print current location
       - script: dotnet test ./DbSafeTests/
         displayName: Tests DbSafe project
 
-      - script: git clone https://github.com/dbsafe/dbsafe-pg-db
-        displayName: Checkout test database
-      - script: docker-compose -f ./dbsafe-pg-db/docker-compose.yml up --build -d
-        displayName: Start container with PostgreSql database
+      # - script: git clone https://github.com/dbsafe/dbsafe-pg-db
+      #   displayName: Checkout PostgreSql test database
+      # - script: docker-compose -f ./dbsafe-pg-db/docker-compose.yml up --build -d
+      #   displayName: Start container with PostgreSql database
+      # - script: docker ps
+      #   displayName: Print Docker containers
+        
+      # - script: dotnet test ./PgDbSafeTests/
+      #   displayName: Tests PgDbSafe project        
+        
+
+      - script: git clone https://github.com/dbsafe/dbsafe-sql-db
+        displayName: Checkout MS-SQL Server test database
+      - script: docker-compose -f ./dbsafe-sql-db/docker-compose.yml up --build -d
+        displayName: Start container with MS-SQL Server
       - script: docker ps
-        displayName: Print Docker containers
-        
-      - script: dotnet test ./PgDbSafeTests/
-        displayName: Tests PgDbSafe project        
-        
+        displayName: Print Docker containers        
   
