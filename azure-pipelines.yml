@@ -33,14 +33,19 @@ stages:
       #   displayName: Tests PgDbSafe project
         
 
-      - script: git clone https://github.com/dbsafe/dbsafe-sql-db
-        displayName: Checkout MS-SQL Server test database
-      - script: docker-compose -f ./dbsafe-sql-db/docker-compose.yml up --build -d
-        displayName: Start container with MS-SQL Server
-      - script: docker ps
-        displayName: Print Docker containers
-      - script: sqlcmd -S localhost -U sa -P "yourStrong(!)Password" -i ./dbsafe-sql-db/ProductDatabase.sql
-        displayName: Deploy database using script
+      # - script: git clone https://github.com/dbsafe/dbsafe-sql-db
+      #   displayName: Checkout MS-SQL Server test database
+      # - script: docker-compose -f ./dbsafe-sql-db/docker-compose.yml up --build -d
+      #   displayName: Start container with MS-SQL Server
+      # - script: docker ps
+      #   displayName: Print Docker containers
+      # - script: sqlcmd -S localhost -U sa -P "yourStrong(!)Password" -i ./dbsafe-sql-db/ProductDatabase.sql
+      #   displayName: Deploy database using script
   
-      - script: dotnet test ./SqlDbSafeTests/
-        displayName: Tests SqlDbSafe project
+      # - script: dotnet test ./SqlDbSafeTests/
+      #   displayName: Tests SqlDbSafe project
+      
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'VSTest'
+          testResultsFiles: '**/TEST-*.xml'
