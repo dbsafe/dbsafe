@@ -19,6 +19,9 @@ stages:
       steps:
       # - script: sqllocaldb info
       #   displayName: Print localdb info
+      
+      # - script: sqlcmd
+      #   displayName: Check if build server has sqlcmd
 
       # - script: dotnet --version
       #   displayName: Print dotnet version
