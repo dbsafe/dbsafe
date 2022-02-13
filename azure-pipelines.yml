@@ -11,6 +11,8 @@ stages:
     - job: BuildAndTest
       displayName: Build and test
       steps:
+      - script: dotnet --version
+        displayName: Print dotnet version
       - script: dotnet build
         displayName: Build solution
       - script: dotnet test .\DbSafeTests\
