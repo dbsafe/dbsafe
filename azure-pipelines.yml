@@ -6,14 +6,13 @@ pool:
 
 stages:
 - stage: CI
-  displayName: Build
+  displayName: Build and test
   jobs:
-    - job: BuildSolution
+    - job: BuildAndTest
+    displayName: Build and test
       steps:
       - script: dotnet build
-
-    - job: DbSafeTest
-      steps:
+      displayName: Build solution
       - script: dotnet test .\DbSafeTests\
-
+      displayName: Tests DbSafe project
   
