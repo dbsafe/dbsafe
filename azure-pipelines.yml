@@ -26,4 +26,7 @@ stages:
         displayName: Print current location
       - script: dotnet test ./DbSafeTests/
         displayName: Tests DbSafe project
+      - checkout: git://dbsafe/dbsafe-pg-db
+        displayName: Checkout test database
+        
   
