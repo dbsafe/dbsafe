@@ -6,12 +6,14 @@ using System.Xml.Linq;
 
 namespace SqlDbSafeTests
 {
+    // This test uses a MS-SQL Server database from
+    // https://github.com/dbsafe/docker-sql-db
     [TestClass]
     public class SqlDatabaseClientTest
     {
-        private string _connectionString = "data source=localhost;initial catalog=Product_Build;integrated security=True;MultipleActiveResultSets=True;App=SqlDatabaseClientTest";
+        private readonly string _connectionString = @"data source=(localdb)\ProjectModels;initial catalog=ProductDatabase;integrated security=True;MultipleActiveResultSets=True;App=SqlDatabaseClientTest";
 
-        private string _createGlobalTempTableCommand = @"
+        private readonly string _createGlobalTempTableCommand = @"
             IF OBJECT_ID('tempdb.dbo.##GlobalTempTable') IS NOT NULL
             BEGIN
                 DROP TABLE ##GlobalTempTable
@@ -20,14 +22,13 @@ namespace SqlDbSafeTests
             CREATE TABLE ##GlobalTempTable (col1 INT PRIMARY KEY);
 ";
 
-        private string _verifyIfTempTableExistsQuery = @"
+        private readonly string _verifyIfTempTableExistsQuery = @"
             IF OBJECT_ID('tempdb.dbo.##GlobalTempTable') IS NOT NULL
                 SELECT '1' AS TempTableExists
             ELSE
                 SELECT '0' AS TempTableExists;
 ";
 
-        // [Ignore("Uses Product_Build database from dbsafe-demo repo")]
         [TestMethod]
         public void Write_read_and_compare_records()
         {
