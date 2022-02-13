@@ -4,10 +4,6 @@ variables:
   - name: _packageVersion
     value: $(_version)$(PrereleaseLabel)
 
-resources:
- containers:
-   - 
-
 trigger:
 - main
 
