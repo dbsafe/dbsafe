@@ -1,19 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>Ernesto Valcarcel</Authors>
     <Description>PgDbSafe supports the creation of automated integration test for code that access a PostgreSQL database.</Description>
-    <Copyright>Copyright (c) 2017 dbsafe</Copyright>
-    <PackageLicenseUrl>https://github.com/dbsafe/dbsafe/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright (c) 2022 dbsafe</Copyright>
     <PackageProjectUrl>https://github.com/dbsafe/dbsafe</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dbsafe/dbsafe</RepositoryUrl>
     <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
     <IncludeSymbols>True</IncludeSymbols>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

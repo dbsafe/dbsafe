@@ -1,0 +1,55 @@
+variables:
+  - name: _version
+    value: $(VersionMajor).$(VersionMinor).$(VersionPatch).$(Build.BuildId)
+  - name: _packageVersion
+    value: $(_version)$(PrereleaseLabel)
+
+trigger:
+- main
+
+pool: 
+  vmImage: ubuntu-latest
+
+stages:
+- stage: CI
+  displayName: Build and test
+  jobs:
+    - job: BuildAndTest
+      displayName: Build and test
+      steps:
+      - script: dotnet build /warnaserror --configuration Release -p:Version=$(_version) -p:PackageVersion=$(_packageVersion)
+        displayName: Build solution
+
+      - task: DotNetCoreCLI@2
+        displayName: Tests DbSafe project
+        inputs:
+          command: 'test'
+          projects: './DbSafeTests/DbSafeTests.csproj'
+
+      - script: git clone https://github.com/dbsafe/dbsafe-pg-db
+        displayName: Checkout PostgreSql test database
+      - script: docker-compose -f ./dbsafe-pg-db/docker-compose.yml up --build -d
+        displayName: Start container with PostgreSql database
+      - script: docker ps
+        displayName: Print Docker containers
+ 
+      - script: git clone https://github.com/dbsafe/dbsafe-sql-db
+        displayName: Checkout MS-SQL Server test database
+      - script: docker-compose -f ./dbsafe-sql-db/docker-compose.yml up --build -d
+        displayName: Start container with MS-SQL Server
+      - script: docker ps
+        displayName: Print Docker containers
+      - script: sqlcmd -S localhost -U sa -P "yourStrong(!)Password" -i ./dbsafe-sql-db/ProductDatabase.sql
+        displayName: Deploy database using script
+
+      - task: DotNetCoreCLI@2
+        displayName: Tests PgDbSafe project
+        inputs:
+          command: 'test'
+          projects: './PgDbSafeTests/PgDbSafeTests.csproj'
+          
+      - task: DotNetCoreCLI@2
+        displayName: Tests SqlDbSafe project
+        inputs:
+          command: 'test'
+          projects: './SqlDbSafeTests/SqlDbSafeTests.csproj'
