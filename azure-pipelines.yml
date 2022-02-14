@@ -42,7 +42,7 @@ stages:
       - script: sqlcmd -S localhost -U sa -P "yourStrong(!)Password" -i ./dbsafe-sql-db/ProductDatabase.sql
         displayName: Deploy database using script
         
-      - script:  ./wait-for-db.ps1 -ContainerName demo-pg-db -MaxNumberOfTries 120
+      - script:  wait-for-db.ps1 -ContainerName demo-pg-db -MaxNumberOfTries 120
         displayName: Wait for PostgreSql database
 
       - task: DotNetCoreCLI@2
@@ -51,7 +51,7 @@ stages:
           command: 'test'
           projects: './PgDbSafeTests/PgDbSafeTests.csproj'
 
-      - script:  ./wait-for-db.ps1 -ContainerName demo-sql-db -MaxNumberOfTries 120
+      - script:  wait-for-db.ps1 -ContainerName demo-sql-db -MaxNumberOfTries 120
         displayName: Wait for MS-SQL Server database
           
       - task: DotNetCoreCLI@2
