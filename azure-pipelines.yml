@@ -5,7 +5,7 @@ variables:
     value: $(_version)$(PrereleaseLabel)
 
 trigger:
-- main
+- master
 
 pool: 
   vmImage: ubuntu-latest
