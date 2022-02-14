@@ -40,7 +40,16 @@ stages:
       - script: docker ps
         displayName: Print Docker containers
         
-      - script:  ./dbsafe-pg-db/wait-for-db.ps1 -ContainerName demo-pg-db -MaxNumberOfTries 120
+      # - script:  ./dbsafe-pg-db/wait-for-db.ps1 -ContainerName demo-pg-db -MaxNumberOfTries 120
+      #   displayName: Wait for PostgreSql database
+
+      - task: PowerShell@2
+        inputs:
+          targetType: 'filePath'
+          filePath: ./dbsafe-pg-db/wait-for-db.ps1
+          arguments: >
+            -ContainerName demo-pg-db 
+            -MaxNumberOfTries 120
         displayName: Wait for PostgreSql database
 
       - task: DotNetCoreCLI@2
