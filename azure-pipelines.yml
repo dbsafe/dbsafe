@@ -39,8 +39,6 @@ stages:
         displayName: Start container with MS-SQL Server
       - script: docker ps
         displayName: Print Docker containers
-      - script: sqlcmd -S localhost -U sa -P "yourStrong(!)Password" -i ./dbsafe-sql-db/ProductDatabase.sql
-        displayName: Deploy database using script
         
       - script:  ./dbsafe-pg-db/wait-for-db.ps1 -ContainerName demo-pg-db -MaxNumberOfTries 120
         displayName: Wait for PostgreSql database
@@ -53,7 +51,9 @@ stages:
 
       - script:  /.dbsafe-sql-db/wait-for-db.ps1 -ContainerName demo-sql-db -MaxNumberOfTries 120
         displayName: Wait for MS-SQL Server database
-          
+      - script: sqlcmd -S localhost -U sa -P "yourStrong(!)Password" -i ./dbsafe-sql-db/ProductDatabase.sql
+        displayName: Deploy database using script
+                  
       - task: DotNetCoreCLI@2
         displayName: Tests SqlDbSafe project
         inputs:
