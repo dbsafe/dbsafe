@@ -32,14 +32,6 @@ stages:
         displayName: Start container with PostgreSql database
       - script: docker ps
         displayName: Print Docker containers
-        
-      # - script: dotnet test ./PgDbSafeTests/
-      #   displayName: Tests PgDbSafe project
-      - task: DotNetCoreCLI@2
-        displayName: Tests PgDbSafe project
-        inputs:
-          command: 'test'
-          projects: './PgDbSafeTests/PgDbSafeTests.csproj'
  
       - script: git clone https://github.com/dbsafe/dbsafe-sql-db
         displayName: Checkout MS-SQL Server test database
@@ -49,9 +41,13 @@ stages:
         displayName: Print Docker containers
       - script: sqlcmd -S localhost -U sa -P "yourStrong(!)Password" -i ./dbsafe-sql-db/ProductDatabase.sql
         displayName: Deploy database using script
-  
-      # - script: dotnet test ./SqlDbSafeTests/
-      #   displayName: Tests SqlDbSafe project
+
+      - task: DotNetCoreCLI@2
+        displayName: Tests PgDbSafe project
+        inputs:
+          command: 'test'
+          projects: './PgDbSafeTests/PgDbSafeTests.csproj'
+          
       - task: DotNetCoreCLI@2
         displayName: Tests SqlDbSafe project
         inputs:
