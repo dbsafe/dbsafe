@@ -40,9 +40,6 @@ stages:
       - script: docker ps
         displayName: Print Docker containers
         
-      # - script:  ./dbsafe-pg-db/wait-for-db.ps1 -ContainerName demo-pg-db -MaxNumberOfTries 120
-      #   displayName: Wait for PostgreSql database
-
       - task: PowerShell@2
         inputs:
           targetType: 'filePath'
@@ -58,10 +55,17 @@ stages:
           command: 'test'
           projects: './PgDbSafeTests/PgDbSafeTests.csproj'
 
-      - script:  /.dbsafe-sql-db/wait-for-db.ps1 -ContainerName demo-sql-db -MaxNumberOfTries 120
+      - task: PowerShell@2
+        inputs:
+          targetType: 'filePath'
+          filePath: ./dbsafe-sql-db/wait-for-db.ps1
+          arguments: >
+            -ContainerName demo-sql-db 
+            -MaxNumberOfTries 120
         displayName: Wait for MS-SQL Server database
+
       - script: sqlcmd -S localhost -U sa -P "yourStrong(!)Password" -i ./dbsafe-sql-db/ProductDatabase.sql
-        displayName: Deploy database using script
+        displayName: Deploy MS-SQL database using script
                   
       - task: DotNetCoreCLI@2
         displayName: Tests SqlDbSafe project
