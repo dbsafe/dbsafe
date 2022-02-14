@@ -1,6 +1,6 @@
 dbsafe – [DAL + database] integration test for .NET
 ==================================================================================
-[![Build status](https://dev.azure.com/dbsafe/dbsafe/_apis/build/status/dbsafe-CI)](https://dev.azure.com/dbsafe/dbsafe/_build/latest?definitionId=1)
+[![Build Status](https://dev.azure.com/dbsafe/dbsafe/_apis/build/status/dbsafe/dbsafe-ci-2022?branchName=master)](https://dev.azure.com/dbsafe/dbsafe/_build/latest?definitionId=7&branchName=master)
 
 Features
 --------
