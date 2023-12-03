@@ -27,11 +27,12 @@ jobs:
       command: 'test'
       projects: './DbSafeTests/DbSafeTests.csproj'
 
-  - task: DotNetCoreCLI@2
-    displayName: Execute Integration Tests - SqliteDbSafe project
-    inputs:
-      command: 'test'
-      projects: './SqliteDbSafeTests/SqliteDbSafeTests.csproj'
+  - script: git clone https://github.com/dbsafe/dbsafe-sql-db
+    displayName: Checkout MS-SQL Server test database
+  - script: docker-compose -f ./dbsafe-sql-db/docker-compose.yml up --build -d
+    displayName: Start container with MS-SQL Server
+  - script: docker ps
+    displayName: Print Docker containers
 
   - script: git clone https://github.com/dbsafe/dbsafe-pg-db
     displayName: Checkout PostgreSql test database
@@ -40,12 +41,11 @@ jobs:
   - script: docker ps
     displayName: Print Docker containers
 
-  - script: git clone https://github.com/dbsafe/dbsafe-sql-db
-    displayName: Checkout MS-SQL Server test database
-  - script: docker-compose -f ./dbsafe-sql-db/docker-compose.yml up --build -d
-    displayName: Start container with MS-SQL Server
-  - script: docker ps
-    displayName: Print Docker containers
+  - task: DotNetCoreCLI@2
+    displayName: Execute Integration Tests - SqliteDbSafe project
+    inputs:
+      command: 'test'
+      projects: './SqliteDbSafeTests/SqliteDbSafeTests.csproj'
 
   - task: PowerShell@2
     inputs:
