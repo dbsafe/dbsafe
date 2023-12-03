@@ -27,6 +27,12 @@ jobs:
       command: 'test'
       projects: './DbSafeTests/DbSafeTests.csproj'
 
+  - task: DotNetCoreCLI@2
+    displayName: Tests SqliteDbSafe project
+    inputs:
+      command: 'test'
+      projects: './SqliteDbSafeTests/SqliteDbSafeTests.csproj'
+
   - script: git clone https://github.com/dbsafe/dbsafe-pg-db
     displayName: Checkout PostgreSql test database
   - script: docker-compose -f ./dbsafe-pg-db/docker-compose.yml up --build -d
