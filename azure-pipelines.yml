@@ -27,6 +27,13 @@ jobs:
       command: 'test'
       projects: './DbSafeTests/DbSafeTests.csproj'
 
+  - script: git clone https://github.com/dbsafe/dbsafe-sql-db
+    displayName: Checkout MS-SQL Server test database
+  - script: docker-compose -f ./dbsafe-sql-db/docker-compose.yml up --build -d
+    displayName: Start container with MS-SQL Server
+  - script: docker ps
+    displayName: Print Docker containers
+
   - script: git clone https://github.com/dbsafe/dbsafe-pg-db
     displayName: Checkout PostgreSql test database
   - script: docker-compose -f ./dbsafe-pg-db/docker-compose.yml up --build -d
@@ -34,12 +41,11 @@ jobs:
   - script: docker ps
     displayName: Print Docker containers
 
-  - script: git clone https://github.com/dbsafe/dbsafe-sql-db
-    displayName: Checkout MS-SQL Server test database
-  - script: docker-compose -f ./dbsafe-sql-db/docker-compose.yml up --build -d
-    displayName: Start container with MS-SQL Server
-  - script: docker ps
-    displayName: Print Docker containers
+  - task: DotNetCoreCLI@2
+    displayName: Execute Integration Tests - SqliteDbSafe project
+    inputs:
+      command: 'test'
+      projects: './SqliteDbSafeTests/SqliteDbSafeTests.csproj'
 
   - task: PowerShell@2
     inputs:
@@ -51,7 +57,7 @@ jobs:
     displayName: Wait for PostgreSql database
 
   - task: DotNetCoreCLI@2
-    displayName: Tests PgDbSafe project
+    displayName: Execute Integration Tests - PgDbSafe project
     inputs:
       command: 'test'
       projects: './PgDbSafeTests/PgDbSafeTests.csproj'
@@ -69,7 +75,7 @@ jobs:
     displayName: Deploy MS-SQL database using script
 
   - task: DotNetCoreCLI@2
-    displayName: Tests SqlDbSafe project
+    displayName: Execute Integration Tests - SqlDbSafe project
     inputs:
       command: 'test'
       projects: './SqlDbSafeTests/SqlDbSafeTests.csproj'
