@@ -28,7 +28,7 @@ jobs:
       projects: './DbSafeTests/DbSafeTests.csproj'
 
   - task: DotNetCoreCLI@2
-    displayName: Tests SqliteDbSafe project
+    displayName: Execute Integration Tests - SqliteDbSafe project
     inputs:
       command: 'test'
       projects: './SqliteDbSafeTests/SqliteDbSafeTests.csproj'
@@ -57,7 +57,7 @@ jobs:
     displayName: Wait for PostgreSql database
 
   - task: DotNetCoreCLI@2
-    displayName: Tests PgDbSafe project
+    displayName: Execute Integration Tests - PgDbSafe project
     inputs:
       command: 'test'
       projects: './PgDbSafeTests/PgDbSafeTests.csproj'
@@ -75,7 +75,7 @@ jobs:
     displayName: Deploy MS-SQL database using script
 
   - task: DotNetCoreCLI@2
-    displayName: Tests SqlDbSafe project
+    displayName: Execute Integration Tests - SqlDbSafe project
     inputs:
       command: 'test'
       projects: './SqlDbSafeTests/SqlDbSafeTests.csproj'
