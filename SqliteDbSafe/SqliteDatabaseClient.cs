@@ -14,8 +14,10 @@ namespace SqliteDbSafe
 
         public override DatasetElement ReadTable(string command, FormatterManager formatter)
         {
-            DatasetElement result = new DatasetElement();
-            result.Data = new XElement("data");
+            DatasetElement result = new DatasetElement
+            {
+                Data = new XElement("data")
+            };
 
             using (var conn = CreateDbConnection(ConnectionString))
             {

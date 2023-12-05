@@ -8,12 +8,10 @@ namespace SqliteDbSafeTests
     [TestClass]
     public class SqliteDatabaseClientTest
     {
-        private readonly string _connectionString = "Data Source=test-database.sqlite";
-
         [TestMethod]
         public void Write_read_and_compare_records()
         {
-            var target = new SqliteDatabaseClient(false) { ConnectionString = _connectionString };
+            var target = new SqliteDatabaseClient(false) { ConnectionString = DatabaseCreator.ConnectionString };
 
             var deleteDataCommand = @"
 DELETE FROM Product;
