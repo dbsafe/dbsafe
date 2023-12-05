@@ -21,6 +21,12 @@ namespace DbSafe.FileDefinition
 
         public string Value { get; set; }
 
+        /// <summary>
+        /// Loads a cref="ScriptElement" from an Xml.
+        /// </summary>
+        /// <param name="xml">Script element</param>
+        /// <param name="filename">DbSafe file. When the Source of the script is a file the sql file is expected to be in the same directory with the DbSafe file or in the test Out directory</param>
+        /// <returns></returns>
         public static ScriptElement Load(XElement xml, string filename)
         {
             FileDefinitionHelper.ValidateElementName(xml, ElementName);
@@ -42,25 +48,32 @@ namespace DbSafe.FileDefinition
                     break;
 
                 case ScriptType.File:
-                    if (File.Exists(xml.Value))
-                    {
-                        Value = xml.Value;
-                        return;
-                    }
-
-                    string path = Path.GetDirectoryName(filename);
-                    path = Path.Combine(path, xml.Value);
-                    if (!File.Exists(path))
-                    {
-                        throw new FileNotFoundException(path);
-                    }
-
+                    var path = NormalizeFilename(xml.Value, filename);
                     Value = File.ReadAllText(path);
                     break;
 
                 default:
                     throw new InvalidOperationException($"Invalid Source '{Source}'");
             }
+        }
+
+        private static string NormalizeFilename(string sourceFilename, string dbSafeFilename)
+        {
+            // The file is in the ...\TestResults\...\Out folder
+            if (File.Exists(sourceFilename))
+            {
+                return sourceFilename;
+            }
+
+            // The file is in the same folder where the DbSafe file is.
+            string path = Path.GetDirectoryName(dbSafeFilename);
+            path = Path.Combine(path, sourceFilename);
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException(path);
+            }
+
+            return path;
         }
 
         private void DecodeAttributes(XElement xml)

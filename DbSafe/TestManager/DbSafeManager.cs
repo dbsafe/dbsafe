@@ -10,9 +10,9 @@ namespace DbSafe
     public abstract class DbSafeManager<TDatabaseClient> : IDbSafeManager
         where TDatabaseClient : IDatabaseClient
     {
-        private FormatterManager _formatterManager = new FormatterManager();
-        private List<KeyValuePair<string, XElement>> _inputs = new List<KeyValuePair<string, XElement>>();
-        private static object syncObj = new object();
+        private readonly FormatterManager _formatterManager = new FormatterManager();
+        private readonly List<KeyValuePair<string, XElement>> _inputs = new List<KeyValuePair<string, XElement>>();
+        private static readonly object syncObj = new object();
 
         protected TDatabaseClient DatabaseClient { get; set; }
 

@@ -99,7 +99,7 @@ namespace DbSafeTests.FileDefinition
             Assert.AreEqual("a large sql command", actual.Value);
         }
 
-        private ScriptElement ExecuteLoad(string xmlText, string filename)
+        private static ScriptElement ExecuteLoad(string xmlText, string filename)
         {
             XElement xml = XElement.Parse(xmlText);
             return ScriptElement.Load(xml, filename);
