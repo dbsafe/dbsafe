@@ -1,5 +1,7 @@
-﻿using DbSafe;
-using System.Data.SqlClient;
+﻿// Ignore Spelling: Sql
+
+using DbSafe;
+using Microsoft.Data.SqlClient;
 
 namespace SqlDbSafe
 {
