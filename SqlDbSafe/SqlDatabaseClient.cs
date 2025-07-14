@@ -1,8 +1,9 @@
-﻿using DbSafe;
+﻿// Ignore Spelling: Sql
+
+using DbSafe;
 using DbSafe.FileDefinition;
-using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;

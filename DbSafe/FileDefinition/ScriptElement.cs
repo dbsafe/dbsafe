@@ -44,12 +44,13 @@ namespace DbSafe.FileDefinition
                 case ScriptType.File:
                     if (File.Exists(xml.Value))
                     {
-                        Value = xml.Value;
-                        return;
+                        // File name with full path in Value
+                        Value = File.ReadAllText(xml.Value);
+                        break;
                     }
 
-                    string path = Path.GetDirectoryName(filename);
-                    path = Path.Combine(path, xml.Value);
+                    // File name only in Value? Combine with script file path
+                    var path = Path.Combine(Path.GetDirectoryName(filename), xml.Value);
                     if (!File.Exists(path))
                     {
                         throw new FileNotFoundException(path);

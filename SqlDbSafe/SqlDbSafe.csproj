@@ -6,16 +6,17 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>Ernesto Valcarcel</Authors>
     <Description>SqlDbSafe supports the creation of automated integration test for code that access a Microsoft SQL Server database.</Description>
-    <Copyright>Copyright (c) 2022 dbsafe</Copyright>
+	<Copyright>Copyright (c) 2025 dbsafe</Copyright>
     <PackageProjectUrl>https://github.com/dbsafe/dbsafe</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dbsafe/dbsafe</RepositoryUrl>
 	<Version>1.0.1</Version>
-	  <IncludeSymbols>True</IncludeSymbols>
+	<IncludeSymbols>False</IncludeSymbols>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="[5.2.3, 5.9.9)" />
   </ItemGroup>
 
   <ItemGroup>

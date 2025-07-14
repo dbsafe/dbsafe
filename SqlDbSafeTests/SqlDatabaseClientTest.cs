@@ -1,3 +1,5 @@
+// Ignore Spelling: Sql
+
 using DbSafe;
 using DbSafe.FileDefinition;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,7 +14,7 @@ namespace SqlDbSafeTests
     public class SqlDatabaseClientTest
     {
         // Database deployed to localhost
-        private readonly string _connectionString = @"data source=localhost;initial catalog=ProductDatabase;User ID=dbsafe;Password=dbsafe;MultipleActiveResultSets=True;App=SqlDatabaseClientTest";
+        private readonly string _connectionString = @"data source=localhost;initial catalog=ProductDatabase;User ID=dbsafe;Password=dbsafe;MultipleActiveResultSets=True;App=SqlDatabaseClientTest;TrustServerCertificate=True";
 
         // Database deployed to (localdb)\ProjectModels
         // private readonly string _connectionString = @"data source=(localdb)\ProjectModels;initial catalog=ProductDatabase;integrated security=True;MultipleActiveResultSets=True;App=SqlDatabaseClientTest";

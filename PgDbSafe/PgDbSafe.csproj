@@ -6,16 +6,17 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>Ernesto Valcarcel</Authors>
     <Description>PgDbSafe supports the creation of automated integration test for code that access a PostgreSQL database.</Description>
-    <Copyright>Copyright (c) 2022 dbsafe</Copyright>
+	<Copyright>Copyright (c) 2025 dbsafe</Copyright>
     <PackageProjectUrl>https://github.com/dbsafe/dbsafe</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dbsafe/dbsafe</RepositoryUrl>
     <Version>1.0.1</Version>
-    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSymbols>False</IncludeSymbols>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageOutputPath>./nupkg</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql" Version="6.0.3" />
+    <PackageReference Include="Npgsql" Version="[8.0.7, 8.9.9)" />
   </ItemGroup>
 
   <ItemGroup>
